@@ -1,0 +1,176 @@
+import { Match } from '../types';
+
+export const matches: Match[] = [
+  {
+    id: '1',
+    team1: {
+      name: 'Arsenal',
+      logo: 'https://images.pexels.com/photos/2570139/pexels-photo-2570139.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 2,
+    },
+    team2: {
+      name: 'Chelsea',
+      logo: 'https://images.pexels.com/photos/1667583/pexels-photo-1667583.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 1,
+    },
+    date: '2025-03-15',
+    time: '15:00',
+    status: 'completed',
+    league: 'Premier League',
+    venue: 'Emirates Stadium',
+  },
+  {
+    id: '2',
+    team1: {
+      name: 'Barcelona',
+      logo: 'https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 3,
+    },
+    team2: {
+      name: 'Real Madrid',
+      logo: 'https://images.pexels.com/photos/4446199/pexels-photo-4446199.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 3,
+    },
+    date: '2025-03-14',
+    time: '20:00',
+    status: 'completed',
+    league: 'La Liga',
+    venue: 'Camp Nou',
+  },
+  {
+    id: '3',
+    team1: {
+      name: 'Liverpool',
+      logo: 'https://images.pexels.com/photos/1667583/pexels-photo-1667583.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    team2: {
+      name: 'Manchester City',
+      logo: 'https://images.pexels.com/photos/2570139/pexels-photo-2570139.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    date: '2025-03-28',
+    time: '17:30',
+    status: 'upcoming',
+    league: 'Premier League',
+    venue: 'Anfield',
+  },
+  {
+    id: '4',
+    team1: {
+      name: 'Juventus',
+      logo: 'https://images.pexels.com/photos/4446199/pexels-photo-4446199.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 2,
+    },
+    team2: {
+      name: 'AC Milan',
+      logo: 'https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 0,
+    },
+    date: '2025-03-16',
+    time: '19:45',
+    status: 'completed',
+    league: 'Serie A',
+    venue: 'Allianz Stadium',
+  },
+  {
+    id: '5',
+    team1: {
+      name: 'Bayern Munich',
+      logo: 'https://images.pexels.com/photos/2570139/pexels-photo-2570139.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    team2: {
+      name: 'Borussia Dortmund',
+      logo: 'https://images.pexels.com/photos/1667583/pexels-photo-1667583.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    date: '2025-03-30',
+    time: '18:00',
+    status: 'upcoming',
+    league: 'Bundesliga',
+    venue: 'Allianz Arena',
+  },
+  {
+    id: '6',
+    team1: {
+      name: 'PSG',
+      logo: 'https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 1,
+    },
+    team2: {
+      name: 'Lille',
+      logo: 'https://images.pexels.com/photos/4446199/pexels-photo-4446199.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 0,
+    },
+    date: '2025-03-10',
+    time: '20:00',
+    status: 'completed',
+    league: 'Ligue 1',
+    venue: 'Parc des Princes',
+  },
+  {
+    id: '7',
+    team1: {
+      name: 'Manchester United',
+      logo: 'https://images.pexels.com/photos/2570139/pexels-photo-2570139.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 1,
+    },
+    team2: {
+      name: 'Tottenham',
+      logo: 'https://images.pexels.com/photos/1667583/pexels-photo-1667583.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 1,
+    },
+    date: '2025-03-12',
+    time: '20:15',
+    status: 'completed',
+    league: 'Premier League',
+    venue: 'Old Trafford',
+  },
+  {
+    id: '8',
+    team1: {
+      name: 'Inter Milan',
+      logo: 'https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    team2: {
+      name: 'Napoli',
+      logo: 'https://images.pexels.com/photos/4446199/pexels-photo-4446199.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    date: '2025-04-02',
+    time: '20:45',
+    status: 'upcoming',
+    league: 'Serie A',
+    venue: 'San Siro',
+  },
+  {
+    id: '9',
+    team1: {
+      name: 'Ajax',
+      logo: 'https://images.pexels.com/photos/2570139/pexels-photo-2570139.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 3,
+    },
+    team2: {
+      name: 'PSV',
+      logo: 'https://images.pexels.com/photos/1667583/pexels-photo-1667583.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+      score: 2,
+    },
+    date: '2025-03-13',
+    time: '19:00',
+    status: 'completed',
+    league: 'Eredivisie',
+    venue: 'Johan Cruyff Arena',
+  },
+  {
+    id: '10',
+    team1: {
+      name: 'Atletico Madrid',
+      logo: 'https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    team2: {
+      name: 'Sevilla',
+      logo: 'https://images.pexels.com/photos/4446199/pexels-photo-4446199.jpeg?auto=compress&cs=tinysrgb&w=50&h=50&dpr=1',
+    },
+    date: '2025-04-05',
+    time: '21:00',
+    status: 'upcoming',
+    league: 'La Liga',
+    venue: 'Wanda Metropolitano',
+  },
+];
