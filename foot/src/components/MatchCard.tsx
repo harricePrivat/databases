@@ -49,7 +49,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
       case 'completed':
         return 'COMPLETED';
       default:
-        return match.status.toUpperCase();
+        return match.status;
     }
   };
 
