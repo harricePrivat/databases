@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, Moon, Sun } from 'lucide-react';
+import MenuNav from './MenuNav';
+import { useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   darkMode: boolean;
@@ -14,6 +16,8 @@ const Navbar: React.FC<NavbarProps> = ({
   currentView, 
   setCurrentView 
 }) => {
+  const navigate= useNavigate()
+  //Utilise sur le mobile
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -24,7 +28,11 @@ const Navbar: React.FC<NavbarProps> = ({
     setCurrentView(view);
     setIsMenuOpen(false);
   };
+  const clickNavigate = (path :string,view: string )=>{
+    setCurrentView(view);
+    navigate(path)
 
+  }
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 ${darkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'} shadow-md transition-colors duration-300`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,26 +46,9 @@ const Navbar: React.FC<NavbarProps> = ({
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center space-x-4">
-            <button 
-              onClick={() => handleNavClick('upcoming')} 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
-                currentView === 'upcoming' 
-                  ? (darkMode ? 'bg-slate-700 text-white' : 'bg-slate-200 text-slate-900') 
-                  : (darkMode ? 'text-gray-300 hover:bg-slate-800' : 'text-gray-700 hover:bg-gray-100')
-              }`}
-            >
-              Upcoming Matches
-            </button>
-            <button 
-              onClick={() => handleNavClick('history')} 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out ${
-                currentView === 'history' 
-                  ? (darkMode ? 'bg-slate-700 text-white' : 'bg-slate-200 text-slate-900') 
-                  : (darkMode ? 'text-gray-300 hover:bg-slate-800' : 'text-gray-700 hover:bg-gray-100')
-              }`}
-            >
-              Match History
-            </button>
+          <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> clickNavigate("/",'Mes données')}/>
+            <MenuNav currentView={currentView} darkMode={darkMode} title='Match' handleNavClick={()=> clickNavigate("/match","Match")}/>
+            {/* <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> handleNavClick('Mes données')}/> */}
             <button 
               onClick={toggleDarkMode} 
               className={`p-2 rounded-full ${darkMode ? 'hover:bg-slate-800' : 'hover:bg-gray-200'} transition-colors duration-150`}

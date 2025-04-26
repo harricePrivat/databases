@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
-import FilterBar from './components/FilterBar';
-import UpcomingMatches from './pages/UpcomingMatches';
-import MatchHistory from './pages/MatchHistory';
-import { matches } from './data/mockData';
-import { MatchFilterOptions } from './types';
+import Navbar from '../components/Navbar';
+import FilterBar from '../components/FilterBar';
+import UpcomingMatches from './UpcomingMatches';
+import MatchHistory from './MatchHistory';
+import { matches } from '../data/mockData';
+import { MatchFilterOptions } from '../types';
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -15,7 +15,7 @@ function App() {
       : window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
-  const [currentView, setCurrentView] = useState('upcoming');
+  const [currentView, setCurrentView] = useState('Match');
   
   const [filterOptions, setFilterOptions] = useState<MatchFilterOptions>({
     status: '',
