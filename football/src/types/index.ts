@@ -22,3 +22,29 @@ export interface MatchFilterOptions {
   league: string;
   searchQuery: string;
 }
+
+export interface Matche {
+  id: string;
+  tournamentId: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeScore: number | null;
+  awayScore: number | null;
+  date: string;
+  time: string;
+  status: 'scheduled' | 'live' | 'completed' | 'cancelled';
+  round: string;
+  venue: string;
+}
+
+
+export interface Tournament {
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  status: 'upcoming' | 'ongoing' | 'completed';
+  logoUrl: string;
+  participants: number;
+}
