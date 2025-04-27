@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { matche } from '../data/mockData';
-import { ChevronRight } from 'lucide-react';
-
-const RecentMatches: React.FC = () => {
+// import { ChevronRight } from 'lucide-react';
+interface RecentMatchesProps{
+  darkMode: boolean
+}
+const SomeMatchs: React.FC<RecentMatchesProps> = (
+  darkMode
+) => {
   // Get only the most recent 5 matches
   const recentMatches = [...matche]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -22,18 +26,15 @@ const RecentMatches: React.FC = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
-      <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-        <h3 className="font-semibold text-gray-900 dark:text-white">Recent Matches</h3>
-        <button className="text-sm text-indigo-600 dark:text-indigo-400 font-medium hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center">
-          View All
-          <ChevronRight size={16} className="ml-1" />
-        </button>
+    <div className={` ${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' }  rounded-xl shadow-lg overflow-hidden`}>
+      <div className={`p-5 border-b ${darkMode.darkMode? 'border-gray-700':'border-gray-100' }   flex justify-between items-center`}>
+        <h3 className={`font-semibold ${darkMode.darkMode?'text-white': 'text-gray-900'} `}>Quelques Matches</h3>
+     
       </div>
       
-      <div className="divide-y divide-gray-100 dark:divide-gray-700">
+      <div className={`divide-y ${darkMode.darkMode?'divide-gray-100' :'divide-gray-700'}`}>
         {recentMatches.map(match => (
-          <div key={match.id} className="p-4 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-150">
+          <div key={match.id} className="p-4  transition-colors duration-150">
             <div className="flex items-center">
               <div className="mr-3 flex items-center justify-center">
                 {getStatusIndicator(match.status)}
@@ -41,7 +42,7 @@ const RecentMatches: React.FC = () => {
               
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                  <span className={`text-sm font-medium ${darkMode.darkMode?'text-white': 'text-gray-900'}`}>
                     {match.homeTeam} vs {match.awayTeam}
                   </span>
                   
@@ -50,7 +51,7 @@ const RecentMatches: React.FC = () => {
                       {match.time}
                     </span>
                   ) : (
-                    <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    <span className={`text-sm ${darkMode.darkMode?'text-white': 'text-gray-900'}`}>
                       {match.homeScore ?? 0} - {match.awayScore ?? 0}
                     </span>
                   )}
@@ -69,4 +70,4 @@ const RecentMatches: React.FC = () => {
   );
 };
 
-export default RecentMatches;
+export default SomeMatchs;

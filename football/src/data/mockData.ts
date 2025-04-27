@@ -1,4 +1,4 @@
-import { Match, Matche, Tournament } from '../types';
+import { Match, Matche, Tournament , Competition} from '../types';
 
 export const matches: Match[] = [
   {
@@ -284,5 +284,45 @@ export const matche: Matche[] = [
     status: 'scheduled',
     round: 'Group Stage',
     venue: 'Miami Arena'
+  }
+];
+
+
+export const competitions: Competition[] = [
+  {
+    id: 'c1',
+    name: 'Premier League',
+    season: '2024-2025',
+    type: 'league',
+    logoUrl: 'https://images.pexels.com/photos/2570139/pexels-photo-2570139.jpeg',
+    currentMatchday: 32,
+    totalMatchdays: 38
+  },
+  {
+    id: 'c2',
+    name: 'La Liga',
+    season: '2024-2025',
+    type: 'league',
+    logoUrl: 'https://images.pexels.com/photos/3148452/pexels-photo-3148452.jpeg',
+    currentMatchday: 30,
+    totalMatchdays: 38
+  },
+  {
+    id: 'c3',
+    name: 'Bundesliga',
+    season: '2024-2025',
+    type: 'league',
+    logoUrl: 'https://images.pexels.com/photos/3621104/pexels-photo-3621104.jpeg',
+    currentMatchday: 28,
+    totalMatchdays: 34
+  },
+  {
+    id: 'c4',
+    name: 'National Cup',
+    season: '2024-2025',
+    type: 'cup',
+    logoUrl: 'https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg',
+    currentMatchday: 5,
+    totalMatchdays: 6
   }
 ];

@@ -48,3 +48,25 @@ export interface Tournament {
   logoUrl: string;
   participants: number;
 }
+
+
+export interface Competition {
+  id: string;
+  name: string;
+  season: string;
+  type: 'league' | 'cup' | 'friendly';
+  logoUrl: string;
+  currentMatchday: number;
+  totalMatchdays: number;
+}
+
+export interface Team {
+  id: string;
+  name: string;
+  logoUrl: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  points: number;
+}

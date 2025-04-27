@@ -2,24 +2,27 @@ import NavBar from '../components/Navbar'
 import {useState, useEffect} from  'react'
 import StatisticCard from '../components/StatisticsCard';
 import { Trophy , Calendar} from 'lucide-react';
-import RecentMatches from '../components/RecentsMatchs';
-import UpcomingTournaments from '../components/UpcomingTournaments';
+import RecentMatches from '../components/SomeMatchs';
+import {competitions} from '../data/mockData'
+import UpcomingTournaments from '../components/SomeTournaments';
 
 // import { MatchFilterOptions , } from '../types';
 // import { matches } from '../data/mockData';
-
+type TeamsProps = {
+  id_team: number;
+  name: string
+}
 
 export default function Dashboard() {
-    var data
     const [nbMatchs,setNbMatch]= useState(0)
     const [nbTeams,setNbTeams]= useState(0)
     const [nbTournois,setNbTournois]=useState(0)
-
-    async function fetchData (){
+    const [someTeams,setSomeTeams]= useState<TeamsProps[]>([])
+    async function fetchData (url: string){
         try{
-            const response= await fetch("http://localhost:3000/tournois")
+            const response= await fetch(url)
             if(response.ok){
-                return response.json()
+                return await response.json()
             }
         }catch(e){
             console.log("Erreur",e)
@@ -37,15 +40,41 @@ export default function Dashboard() {
       const [currentView, setCurrentView] = useState("Mes données");
       
     
+     useEffect(()=>{
+      const someTeam= async ()=>{
+          const teams= await fetchData("http://localhost:3000/teams")
+          const results : TeamsProps[] = teams.map((dd: any)=>({
+              id_team : dd.id_team,
+              name: dd.name
+          }))
+          if(teams) {
+            setSomeTeams(
+                results
+            )
+   
+          }
+
+       }
+       someTeam()
+     },[])
+
+      
+ 
+     
+      useEffect(()=>{
+        const getData= async ()=>{
+          const data = await fetchData("http://localhost:3000/nb-data")
+         setNbMatch(data.nbMatchs)
+         setNbTeams(data.nbTeams)
+         setNbTournois(data.nbTournois)
+     }
+     
+     getData()
+      },[])
+
       // Save dark mode preference
       useEffect(() => {
-        const getData= async ()=>{
-             data = await fetchData()
-            setNbMatch(data.nbMatchs)
-            setNbTeams(data.nbTeams)
-            setNbTournois(data.nbTournois)
-        }
-        getData()
+       
         localStorage.setItem('darkMode', String(darkMode));
         
         // Apply dark mode to document body
@@ -56,6 +85,7 @@ export default function Dashboard() {
           document.body.classList.add('bg-gray-100');
         }
         
+
         return () => {
           document.body.classList.remove('bg-slate-950', 'bg-gray-100');
         };
@@ -96,10 +126,55 @@ export default function Dashboard() {
         </div>
         <div className=" mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <RecentMatches />
+          <RecentMatches  darkMode={darkMode}/>
         </div>
         <div>
-          <UpcomingTournaments />
+          <UpcomingTournaments darkMode={darkMode} />
+        </div>
+      </div>
+
+      <div className=" mt-6 grid grid-cols-1 gap-6">
+        <div className={`${darkMode?'bg-gray-800':'bg-white' } rounded-xl shadow-lg overflow-hidden`}>
+          <div className="p-5 border-b border-gray-100 dark:border-gray-700">
+          <h3 className={`font-semibold ${darkMode?'text-gray-100': 'text-gray-900'} `}>Quelques Équipes</h3>
+          </div>
+          
+          <div className="p-5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {someTeams && someTeams.map(some => (
+                <div key={some.id_team} className={`${darkMode?'bg-gray-750':'bg-gray-100' } shadow-xl rounded-lg p-4`}>
+                  <div className="flex items-center mb-3">
+                    <div className="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mr-3">
+                      <img 
+                        src={competitions[0].logoUrl} 
+                        alt={some.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className={`font-medium ${darkMode?'text-gray-100': 'text-gray-900'} `}>{some.name}</h4>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">{competitions[0].season}</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-gray-600 dark:text-gray-400">Victoires</span>
+                      <span className={`font-medium  ${darkMode?'text-gray-200':'text-gray-800'}`}>
+                        {Math.round((competitions[0].currentMatchday / competitions[0].totalMatchdays) * 100)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                      <div 
+                        className="bg-indigo-600 dark:bg-indigo-500 h-1.5 rounded-full" 
+                        style={{ width: `${(competitions[0].currentMatchday / competitions[0].totalMatchdays) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </main>
