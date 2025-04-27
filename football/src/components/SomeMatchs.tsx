@@ -37,7 +37,6 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
   useEffect(()=>{
     const getMatchs = async ()=>{
       const result= await fetchData("http://localhost:3000/five-matchs")
-      console.log("Voici le resultats",result)
       setSomeMatchs(result)
     }
 

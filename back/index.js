@@ -37,15 +37,12 @@ app.get("/teams",async (req,res)=>{
       for(fiveteam of fiveTeams){
 
          await sq.query("SET @result=0")
-         await sq.query("SET @victoire=0")
-
          await sq.query(`CALL CountMatchs(:team,@result)`,{
           replacements: {team: fiveteam.dataValues.name} 
          })
         const [{ victoire : victoire}]= await sq.query('CALL NombreVictoire(:team,@victoire)',{
           replacements: {team: fiveteam.dataValues.name}
          })
-         console.log(victoire)
 
          const  [[{ '@result': matchCount }]] = await sq.query("SELECT @result")
          datas.push({
@@ -63,10 +60,50 @@ app.get("/teams",async (req,res)=>{
 
 })
 
+app.get("/five-tournaments",async (req,res)=> {
+  try{
+    var datas= []
+    const fiveTournaments=await tournaments.findAll({
+      limit: 6
+    })
+    await sq.query("SET @result=0")
+    for(fiveTournament of fiveTournaments){
+      await sq.query("CALL GetNbMatch(:tournoi,@result)",{
+        replacements: {
+          tournoi: fiveTournament.dataValues.name 
+        }
+      })
+     const date=  await sq.query("CALL IDateMatch(:tournoi)",{
+        replacements: {
+          tournoi: fiveTournament.dataValues.name 
+        }
+      })
+      if(date.length===1) date.push(date[0])
+      const [[{"@result": results}]] = await sq.query("SELECT @result")
+      datas.push(
+        {
+          name: fiveTournament.dataValues.name,
+          nbMatch: results,
+          dateBegin: date[0].date,
+           dateEnd: date[1].date 
+        }
+      )
+    }
+    res.status(200).json(datas)
+
+  }catch(error){
+    console.log("Voici l'erreur",error)
+    res.status(500).json({
+      error: error.message,
+      message:"Erreur de serveur 500"
+    })
+ 
+  }
+})
+
 app.get("/five-matchs",async (req,res)=>{
   try{
    const result= await sq.query("CALL GetFiveMatchs()")
-   console.log(result)
    res.status(200).json(result)
   }catch(e){
     console.log("Voici l'erreur",e)

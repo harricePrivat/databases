@@ -1,14 +1,21 @@
-import { tournaments } from '../data/mockData';
+import { useEffect,useState } from 'react';
+// import { tournaments } from '../data/mockData';
 import { Calendar,Trophy } from 'lucide-react';
 
 interface UpcomingTournamentsProps{
   darkMode : boolean
 }
+type TournoisProps = {
+  name: string,
+		nbMatch: number,
+		dateBegin:string,
+		dateEnd: string
+}
 
 const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
   // Filter for upcoming tournaments only
-  const upcomingTournaments = tournaments.filter(t => t.status === 'upcoming');
-
+  // const upcomingTournaments = tournaments.filter(t => t.status === 'upcoming');
+  const [tournois,setTournois]= useState<TournoisProps[] >([])
 
   
       async function fetchData(url:string){
@@ -17,6 +24,13 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
         return await response.json()
       }
     }
+    useEffect(()=>{
+     const getData = async ()=>{
+      const results =await fetchData("http://localhost:3000/five-tournaments")
+      setTournois(results)
+     }
+      getData()
+    },[])
 
   return (
     <div className={`${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' } rounded-xl shadow-lg overflow-hidden h-full`}>
@@ -25,9 +39,9 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
       </div>
       
       <div className="divide-y divide-gray-100 dark:divide-gray-700">
-        {upcomingTournaments.length > 0 ? (
-          upcomingTournaments.map(tournament => (
-            <div key={tournament.id} className="p-4 transition-colors duration-150">
+        { tournois && (
+          tournois.slice(1,6).map(tournament => (
+            <div key={tournament.name} className="p-4 transition-colors duration-150">
               <div className="flex items-center">
                 <div className="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden mr-3">
                   {/* <img 
@@ -44,24 +58,20 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
                       {tournament.name}
                     </span>
                     <span className={`text-xs font-medium ${darkMode.darkMode?'bg-blue-900/30' :'bg-blue-100'} ${darkMode.darkMode?'text-blue-300' :'text-blue-800'}   px-2 py-1 rounded-full`}>
-                      {tournament.participants} Teams
+                      {tournament.nbMatch} Matchs
                     </span>
                   </div>
                   
                   <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
                     <Calendar size={12} className="mr-1" />
                     <span>
-                      {new Date(tournament.startDate).toLocaleDateString()} - {new Date(tournament.endDate).toLocaleDateString()}
+                      {new Date(tournament.dateBegin).toLocaleDateString()} - {new Date(tournament.dateEnd).toLocaleDateString()}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
           ))
-        ) : (
-          <div className="p-4 text-center text-gray-500 dark:text-gray-400">
-            No upcoming tournaments scheduled
-          </div>
         )}
       </div>
     </div>
