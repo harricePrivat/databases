@@ -1,29 +1,50 @@
-import React, { useEffect } from 'react';
-import { matche } from '../data/mockData';
+import React, { useEffect , useState} from 'react';
+// import { matche } from '../data/mockData';
 // import { ChevronRight } from 'lucide-react';
 interface RecentMatchesProps{
   darkMode: boolean
+}
+
+type MatchsProps={
+  id: number;
+  nomTournois: string,
+	home_score: number,
+	away_score: number,
+	home_team: string,
+	away_team: string,
+	date: string
+
 }
 const SomeMatchs: React.FC<RecentMatchesProps> = (
   darkMode
 ) => {
   // Get only the most recent 5 matches
-  const recentMatches = [...matche]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5);
+  // const recentMatches = [...matche]
+  //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  //   .slice(0, 5);
+  
+  
+  const [someMatchs,setSomeMatchs]= useState<MatchsProps[]>([])
 
-  const getStatusIndicator = (status: string) => {
-    switch (status) {
-      case 'live':
-        return <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>;
-      case 'completed':
-        return <span className="w-2 h-2 bg-gray-500 rounded-full"></span>;
-      case 'scheduled':
-        return <span className="w-2 h-2 bg-blue-500 rounded-full"></span>;
-      default:
-        return <span className="w-2 h-2 bg-gray-500 rounded-full"></span>;
+    async function fetchData(url:string){
+    const response= await fetch(url)
+    if(response.ok){
+      return await response.json()
     }
-  };
+  }
+
+
+  useEffect(()=>{
+    const getMatchs = async ()=>{
+      const result= await fetchData("http://localhost:3000/five-matchs")
+      console.log("Voici le resultats",result)
+      setSomeMatchs(result)
+    }
+
+    getMatchs()
+  },[])
+
+
 
   return (
     <div className={` ${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' }  rounded-xl shadow-lg overflow-hidden`}>
@@ -33,32 +54,26 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
       </div>
       
       <div className={`divide-y ${darkMode.darkMode?'divide-gray-100' :'divide-gray-700'}`}>
-        {recentMatches.map(match => (
+        { someMatchs && someMatchs.map(match => (
           <div key={match.id} className="p-4  transition-colors duration-150">
             <div className="flex items-center">
               <div className="mr-3 flex items-center justify-center">
-                {getStatusIndicator(match.status)}
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
               </div>
               
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
                   <span className={`text-sm font-medium ${darkMode.darkMode?'text-white': 'text-gray-900'}`}>
-                    {match.homeTeam} vs {match.awayTeam}
+                    {match.home_team} vs {match.away_team}
                   </span>
-                  
-                  {match.status === 'scheduled' ? (
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {match.time}
-                    </span>
-                  ) : (
                     <span className={`text-sm ${darkMode.darkMode?'text-white': 'text-gray-900'}`}>
-                      {match.homeScore ?? 0} - {match.awayScore ?? 0}
+                      {match.home_score ?? 0} - {match.away_score ?? 0}
                     </span>
-                  )}
+                  
                 </div>
                 
-                <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                  <span>{match.round}</span>
+                <div className={`flex items-center justify-between text-xs  ${darkMode?'text-gray-400':'text-gray-600'}`}>
+                  <span className=''>{match.nomTournois}</span>
                   <span>{new Date(match.date).toLocaleDateString()}</span>
                 </div>
               </div>
@@ -71,3 +86,4 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
 };
 
 export default SomeMatchs;
+

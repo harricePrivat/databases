@@ -1,5 +1,5 @@
 const express= require('express')
-const {models} = require('./database')
+const {models, sq} = require('./database')
 const { matchs, tournaments,teams } = models
 const cors = require('cors')
 // const auto= require('./sequelizequto')
@@ -29,13 +29,35 @@ app.get("/nb-data",async (req,res)=>{
 
 app.get("/teams",async (req,res)=>{
     try{
+      var datas= []
       const fiveTeams= await teams.findAll({
         limit: 3
       })
       // console.log(fiveTeams[0].dataValues)
-      return res.status(200).json(fiveTeams)
+      for(fiveteam of fiveTeams){
+
+         await sq.query("SET @result=0")
+         await sq.query("SET @victoire=0")
+
+         await sq.query(`CALL CountMatchs(:team,@result)`,{
+          replacements: {team: fiveteam.dataValues.name} 
+         })
+        const [{ victoire : victoire}]= await sq.query('CALL NombreVictoire(:team,@victoire)',{
+          replacements: {team: fiveteam.dataValues.name}
+         })
+         console.log(victoire)
+
+         const  [[{ '@result': matchCount }]] = await sq.query("SELECT @result")
+         datas.push({
+          id_team: fiveteam.dataValues.id_team,
+          name: fiveteam.dataValues.name,
+          nbMatch: matchCount,
+          victoire: victoire
+         })
+      }
+      return res.status(200).json(datas)
     }catch(error){
-      console.error("Erreur lors de la recuperation:", e)
+      console.error("Erreur lors de la recuperation:", error)
       res.status(500).json({ message: 'Erreur serveur', error: error.message });    
     }
 
@@ -43,30 +65,16 @@ app.get("/teams",async (req,res)=>{
 
 app.get("/five-matchs",async (req,res)=>{
   try{
-    const fiveMatchs= await matchs.findAll({
-      limit: 5,
-      include: [
-       {
-        model: teams
-       } 
-      ]
+   const result= await sq.query("CALL GetFiveMatchs()")
+   console.log(result)
+   res.status(200).json(result)
+  }catch(e){
+    console.log("Voici l'erreur",e)
+    res.status(500).json({
+      error: e,
+      message:"Erreur de serveur 500"
     })
-    return res.status(200).json(fiveMatchs)
-  }catch(e){
-    console.error("Erreur lors de la recuperation:", e)
-    res.status(500).json({ message: 'Erreur serveur', error: error.message });    
-  }
-})
 
-app.get("/five-tournaments",async (req,res)=>{
-  try{
-      const ft= await tournaments.findAll({
-        limit: 5
-      })
-      res.status(200).json(ft)
-  }catch(e){
-    console.error("Erreur lors de la recuperation:", e)
-    res.status(500).json({ message: 'Erreur serveur', error: error.message });    
   }
 })
 

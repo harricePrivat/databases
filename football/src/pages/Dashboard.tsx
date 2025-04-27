@@ -10,7 +10,9 @@ import UpcomingTournaments from '../components/SomeTournaments';
 // import { matches } from '../data/mockData';
 type TeamsProps = {
   id_team: number;
-  name: string
+  name: string;
+  nbMatch: number;
+  victoire: number;
 }
 
 export default function Dashboard() {
@@ -45,7 +47,9 @@ export default function Dashboard() {
           const teams= await fetchData("http://localhost:3000/teams")
           const results : TeamsProps[] = teams.map((dd: any)=>({
               id_team : dd.id_team,
-              name: dd.name
+              name: dd.name,
+              nbMatch: dd.nbMatch ,
+              victoire: dd.victoire
           }))
           if(teams) {
             setSomeTeams(
@@ -153,7 +157,10 @@ export default function Dashboard() {
                     </div>
                     <div>
                       <h4 className={`font-medium ${darkMode?'text-gray-100': 'text-gray-900'} `}>{some.name}</h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">{competitions[0].season}</p>
+                 <div className='flex'>
+                 <p className='text-xs text-gray-500 dark:text-gray-400 mr-2'>Nombre de matchs: </p>
+                 <p className=" font-bold  text-xs text-gray-500 dark:text-gray-400">{some.nbMatch}</p>
+                 </div>
                     </div>
                   </div>
                   
@@ -161,13 +168,13 @@ export default function Dashboard() {
                     <div className="flex justify-between text-xs mb-1">
                       <span className="text-gray-600 dark:text-gray-400">Victoires</span>
                       <span className={`font-medium  ${darkMode?'text-gray-200':'text-gray-800'}`}>
-                        {Math.round((competitions[0].currentMatchday / competitions[0].totalMatchdays) * 100)}%
+                        {Math.round((some.victoire / some.nbMatch) * 100)}%
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
                       <div 
                         className="bg-indigo-600 dark:bg-indigo-500 h-1.5 rounded-full" 
-                        style={{ width: `${(competitions[0].currentMatchday / competitions[0].totalMatchdays) * 100}%` }}
+                        style={{ width: `${(some.victoire / some.nbMatch) * 100}%` }}
                       ></div>
                     </div>
                   </div>

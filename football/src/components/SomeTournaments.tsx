@@ -9,6 +9,15 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
   // Filter for upcoming tournaments only
   const upcomingTournaments = tournaments.filter(t => t.status === 'upcoming');
 
+
+  
+      async function fetchData(url:string){
+      const response= await fetch(url)
+      if(response.ok){
+        return await response.json()
+      }
+    }
+
   return (
     <div className={`${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' } rounded-xl shadow-lg overflow-hidden h-full`}>
       <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">

@@ -1,20 +1,21 @@
 const {Sequelize} = require('sequelize')
 const { initModels } = require('./models/init-models')
 
-const sequelize = new Sequelize('football','dev','dev',{
+const sq = new Sequelize('football','dev','dev',{
     host: 'localhost',
     dialect: "mysql"
 }) 
 
-const models = initModels(sequelize)
+const models = initModels(sq)
+
 
 try{
-    sequelize.authenticate()
-}catch(e){
-    console.log("Voici l'erreur",e)
+    sq.authenticate()
+}catch(error){
+    console.log("Voici l'erreur",error)
 }
 
 
 // const Personne = sequelize.define()
 
-module.exports = { sequelize, models }
+module.exports = { sq, models }
