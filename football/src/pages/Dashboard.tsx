@@ -13,6 +13,7 @@ type TeamsProps = {
   name: string;
   nbMatch: number;
   victoire: number;
+  drapeau:string
 }
 
 export default function Dashboard() {
@@ -44,12 +45,14 @@ export default function Dashboard() {
     
      useEffect(()=>{
       const someTeam= async ()=>{
+        // const flag= await fetchData(`https://restcountries.com/v3.1/name/${country_name}`)
           const teams= await fetchData("http://localhost:3000/teams")
           const results : TeamsProps[] = teams.map((dd: any)=>({
               id_team : dd.id_team,
               name: dd.name,
               nbMatch: dd.nbMatch ,
-              victoire: dd.victoire
+              victoire: dd.victoire,
+              drapeau: dd.drapeau
           }))
           if(teams) {
             setSomeTeams(
@@ -62,7 +65,11 @@ export default function Dashboard() {
        someTeam()
      },[])
 
-      
+      // useEffect(()=>{
+      //   const getFl= async ()=>{
+
+      //   }
+      // },[])
  
      
       useEffect(()=>{
@@ -150,7 +157,7 @@ export default function Dashboard() {
                   <div className="flex items-center mb-3">
                     <div className="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden mr-3">
                       <img 
-                        src={competitions[0].logoUrl} 
+                        src={some.drapeau} 
                         alt={some.name} 
                         className="w-full h-full object-cover"
                       />

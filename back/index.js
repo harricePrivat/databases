@@ -9,6 +9,14 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
+async function fetchData(url){
+   try{
+    const response= await fetch(url)
+    return await response.json()    
+   }catch(error){
+    console.log("Voici l'erreur ",error)
+   }
+}
 
 app.get("/nb-data",async (req,res)=>{
     try {
@@ -35,7 +43,11 @@ app.get("/teams",async (req,res)=>{
       })
       // console.log(fiveTeams[0].dataValues)
       for(fiveteam of fiveTeams){
-
+        var flagUrl=""
+        const response =await fetchData(`https://restcountries.com/v3.1/name/${fiveteam.dataValues.name}`)
+      //  if(response.status===201) 
+        console.log("Voici le status de la requete",response.status)
+         if(response.status===undefined) flagUrl=response[0].flags.svg
          await sq.query("SET @result=0")
          await sq.query(`CALL CountMatchs(:team,@result)`,{
           replacements: {team: fiveteam.dataValues.name} 
@@ -49,7 +61,8 @@ app.get("/teams",async (req,res)=>{
           id_team: fiveteam.dataValues.id_team,
           name: fiveteam.dataValues.name,
           nbMatch: matchCount,
-          victoire: victoire
+          victoire: victoire,
+          drapeau: flagUrl
          })
       }
       return res.status(200).json(datas)
