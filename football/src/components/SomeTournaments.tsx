@@ -38,6 +38,7 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
     <div className={`${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' } rounded-xl shadow-lg overflow-hidden h-full`}>
       <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
         <h3 className={`font-semibold ${darkMode.darkMode?'text-white': 'text-gray-900'} `}>Quelques compétitions</h3>
+        <button className={`${darkMode.darkMode ? 'text-white': 'text-black'} underline hover:text-blue-500`}>Regarder tout </button>
       </div>
       
       <div className="divide-y divide-gray-100 dark:divide-gray-700">

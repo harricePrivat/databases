@@ -47,7 +47,10 @@ const Navbar: React.FC<NavbarProps> = ({
           {/* Desktop menu */}
           <div className="hidden md:flex items-center space-x-4">
           <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> clickNavigate("/",'Mes données')}/>
-            <MenuNav currentView={currentView} darkMode={darkMode} title='Match' handleNavClick={()=> clickNavigate("/match","Match")}/>
+            <MenuNav currentView={currentView} darkMode={darkMode} title='Match' handleNavClick={()=> clickNavigate("/match","Matchs")}/>
+              <MenuNav currentView={currentView} darkMode={darkMode} title='Equipes' handleNavClick={()=>clickNavigate("/team","Equipes")}/>
+              <MenuNav currentView={currentView} darkMode={darkMode} title='Compétitions' handleNavClick={()=>clickNavigate("/competition","Compétitions")}/>
+
             {/* <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> handleNavClick('Mes données')}/> */}
             <button 
               onClick={toggleDarkMode} 

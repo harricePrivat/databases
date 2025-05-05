@@ -3,7 +3,6 @@ import {useState, useEffect} from  'react'
 import StatisticCard from '../components/StatisticsCard';
 import { Trophy , Calendar} from 'lucide-react';
 import RecentMatches from '../components/SomeMatchs';
-import {competitions} from '../data/mockData'
 import UpcomingTournaments from '../components/SomeTournaments';
 
 // import { MatchFilterOptions , } from '../types';

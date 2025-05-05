@@ -42,14 +42,16 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
 
     getMatchs()
   },[])
+  
+  const goMatchs = ()=>{
 
-
+  }
 
   return (
     <div className={` ${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' }  rounded-xl shadow-lg overflow-hidden`}>
       <div className={`p-5 border-b ${darkMode.darkMode? 'border-gray-700':'border-gray-100' }   flex justify-between items-center`}>
         <h3 className={`font-semibold ${darkMode.darkMode?'text-white': 'text-gray-900'} `}>Quelques Matches</h3>
-     
+        <button  onClick={goMatchs} className={`${darkMode.darkMode ? 'text-white': 'text-black'} underline hover:text-blue-500`}>Regarder tout </button>
       </div>
       
       <div className={`divide-y ${darkMode.darkMode?'divide-gray-100' :'divide-gray-700'}`}>
