@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.41, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.42, for Linux (x86_64)
 --
 -- Host: localhost    Database: football
 -- ------------------------------------------------------
--- Server version	8.0.41-0ubuntu0.22.04.1
+-- Server version	8.0.42-0ubuntu0.24.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,23 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Temporary view structure for view `mada`
+--
+
+DROP TABLE IF EXISTS `mada`;
+/*!50001 DROP VIEW IF EXISTS `mada`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `mada` AS SELECT 
+ 1 AS `id_match`,
+ 1 AS `id_tournois`,
+ 1 AS `id_home_team`,
+ 1 AS `id_away_team`,
+ 1 AS `id_scores`,
+ 1 AS `date`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `matchs`
@@ -125,6 +142,24 @@ LOCK TABLES `tournaments` WRITE;
 INSERT INTO `tournaments` VALUES (1,'Friendly'),(2,'British Home Championship'),(3,'Évence Coppée Trophy'),(4,'Muratti Vase'),(5,'Copa Lipton'),(6,'Copa Newton'),(7,'Copa Premio Honor Argentino'),(8,'Olympic Games'),(9,'Copa Premio Honor Uruguayo'),(10,'Far Eastern Championship Games'),(11,'Copa Roca'),(12,'Copa América'),(13,'Inter-Allied Games'),(14,'Peace Cup'),(15,'Open International Championship'),(16,'Copa Chevallier Boutell'),(17,'Nordic Championship'),(18,'Central European International Cup'),(19,'Baltic Cup'),(20,'Balkan Cup'),(21,'Central American and Caribbean Games'),(22,'FIFA World Cup'),(23,'Copa Rio Branco'),(24,'FIFA World Cup qualification'),(25,'Bolivarian Games'),(26,'CCCF Championship'),(27,'NAFC Championship'),(28,'Copa Oswaldo Cruz'),(29,'Asian Games'),(30,'Pan American Championship'),(31,'Copa del Pacífico'),(32,'Copa Bernardo O\'Higgins'),(33,'AFC Asian Cup qualification'),(34,'Atlantic Cup'),(35,'AFC Asian Cup'),(36,'African Cup of Nations'),(37,'Copa Paz del Chaco'),(38,'Merdeka Tournament'),(39,'UEFA Euro qualification'),(40,'Southeast Asian Peninsular Games'),(41,'African Friendship Games'),(42,'UEFA Euro'),(43,'Windward Islands Tournament'),(44,'African Cup of Nations qualification'),(45,'Vietnam Independence Cup'),(46,'Copa Carlos Dittborn'),(47,'Phillip Seaga Cup'),(48,'CONCACAF Championship'),(49,'Copa Juan Pinto Durán'),(50,'Arab Cup'),(51,'South Pacific Games'),(52,'Zambian Independence Tournament'),(53,'CONCACAF Championship qualification'),(54,'Copa Artigas'),(55,'All-African Games'),(56,'GaNEFo'),(57,'Copa América qualification'),(58,'King\'s Cup'),(59,'Gulf Cup'),(60,'Indonesia Tournament'),(61,'Korea Cup'),(62,'Palestine Cup'),(63,'Brazil Independence Cup'),(64,'Copa Ramón Castilla'),(65,'Oceania Nations Cup'),(66,'CECAFA Cup'),(67,'Kuneitra Cup'),(68,'Copa Félix Bogado'),(69,'Real Madrid 75th Anniversary Cup'),(70,'Beijing International Friendship Tournament'),(71,'Southeast Asian Games'),(72,'Kirin Cup'),(73,'CFU Caribbean Cup qualification'),(74,'CFU Caribbean Cup'),(75,'Amílcar Cabral Cup'),(76,'FIFA 75th Anniversary Cup'),(77,'Indian Ocean Island Games'),(78,'Guangzhou International Friendship Tournament'),(79,'Mundialito'),(80,'South Pacific Mini Games'),(81,'West African Cup'),(82,'Nehru Cup'),(83,'Merlion Cup'),(84,'Great Wall Cup'),(85,'South Asian Games'),(86,'UDEAC Cup'),(87,'Rous Cup'),(88,'CONMEBOL–UEFA Cup of Champions'),(89,'Miami Cup'),(90,'Lunar New Year Cup'),(91,'Arab Cup qualification'),(92,'Tournoi de France'),(93,'Malta International Tournament'),(94,'Four Nations Tournament'),(95,'Matthews Cup'),(96,'Tournament Burkina Faso'),(97,'Marlboro Cup'),(98,'Island Games'),(99,'NAFU Championship'),(100,'Dynasty Cup'),(101,'Dakar Tournament'),(102,'UNCAF Cup'),(103,'Scania 100 Tournament'),(104,'Gold Cup'),(105,'USA Cup'),(106,'Jordan International Tournament'),(107,'Confederations Cup'),(108,'East Asian Games'),(109,'United Arab Emirates Friendship Tournament'),(110,'Joe Robbie Cup'),(111,'Oceania Nations Cup qualification'),(112,'Simba Tournament'),(113,'SAFF Cup'),(114,'AFF Championship'),(115,'King Hassan II Tournament'),(116,'Cyprus International Tournament'),(117,'Dunhill Cup'),(118,'COSAFA Cup qualification'),(119,'COSAFA Cup'),(120,'Gold Cup qualification'),(121,'AFF Championship qualification'),(122,'SKN Football Festival'),(123,'Four Nations\' Cup'),(124,'UNIFFAC Cup'),(125,'WAFF Championship'),(126,'Millennium Cup'),(127,'Cup of Ancient Civilizations'),(128,'Prime Minister\'s Cup'),(129,'The Other Final'),(130,'EAFF Championship'),(131,'TIFOCO Tournament'),(132,'Afro-Asian Games'),(133,'AFC Challenge Cup'),(134,'FIFI Wild Cup'),(135,'ELF Cup'),(136,'Viva World Cup'),(137,'AFC Challenge Cup qualification'),(138,'Coupe de l\'Outre-Mer'),(139,'VFF Cup'),(140,'Corsica Cup'),(141,'Dragon Cup'),(142,'ABCS Tournament'),(143,'Nile Basin Tournament'),(144,'Nations Cup'),(145,'Copa Confraternidad'),(146,'Pacific Games'),(147,'Superclásico de las Américas'),(148,'Kirin Challenge Cup'),(149,'Tynwald Hill Tournament'),(150,'OSN Cup'),(151,'CONIFA World Football Cup'),(152,'Niamh Challenge Cup'),(153,'CONIFA European Football Cup'),(154,'Benedikt Fontana Cup'),(155,'ConIFA Challenger Cup'),(156,'Hungary Heritage Cup'),(157,'World Unity Cup'),(158,'Pacific Mini Games'),(159,'Intercontinental Cup'),(160,'UEFA Nations League'),(161,'CONCACAF Nations League qualification'),(162,'Atlantic Heritage Cup'),(163,'Inter Games Football Tournament'),(164,'CONCACAF Nations League'),(165,'Three Nations Cup'),(166,'Mahinda Rajapaksa Cup'),(167,'Navruz Cup'),(168,'CONIFA Africa Football Cup'),(169,'CONIFA South America Football Cup'),(170,'MSG Prime Minister\'s Cup'),(171,'Tri Nation Tournament'),(172,'CAFA Nations Cup'),(173,'Mauritius Four Nations Cup'),(174,'CONIFA World Football Cup qualification'),(175,'CONIFA Asia Cup'),(176,'FIFA Series'),(177,'Marianas Cup'),(178,'Tri-Nations Series'),(179,'ASEAN Championship qualification'),(180,'ASEAN Championship'),(181,'EAFF Championship qualification'),(182,'Mapinduzi Cup');
 /*!40000 ALTER TABLE `tournaments` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Final view structure for view `mada`
+--
+
+/*!50001 DROP VIEW IF EXISTS `mada`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `mada` AS select `matchs`.`id_match` AS `id_match`,`matchs`.`id_tournois` AS `id_tournois`,`matchs`.`id_home_team` AS `id_home_team`,`matchs`.`id_away_team` AS `id_away_team`,`matchs`.`id_scores` AS `id_scores`,`matchs`.`date` AS `date` from `matchs` where ((`matchs`.`id_away_team` = 168) or (`matchs`.`id_home_team` = 168)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -135,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-15 13:40:29
+-- Dump completed on 2025-05-07 10:25:02

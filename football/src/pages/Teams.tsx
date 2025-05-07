@@ -46,6 +46,7 @@ export default function Teams() {
     <div className="block">
         <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
         <FilterBar 
+        placeholder='Recherche equipes ...'
         darkMode={darkMode} 
         // filterOptions={filterOptions} 
         // setFilterOptions={setFilterOptions}

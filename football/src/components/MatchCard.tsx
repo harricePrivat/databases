@@ -42,8 +42,6 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
       >
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            {/* <div className={`w-2 h-2 rounded-full mr-2 ${getStatusColor()}`}></div> */}
-            {/* <span className="text-xs font-semibold">{getStatusText()}</span> */}
           </div>
           <div className="text-sm font-medium">{match.nomTournois}</div>
         </div>
@@ -54,15 +52,9 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
             <span className="font-semibold">{match.home_team}</span>
           </div>
           
-          {/* {match.status === 'completed' || match.status === 'live' ? ( */}
             <div className="text-center font-bold text-xl">
               {match.home_score} - {match.away_score}
             </div>
-          {/* ) : ( */}
-            {/* <div className="text-center text-sm font-medium">
-              {match.time}
-            </div> */}
-          {/* )} */}
           
           <div className="flex items-center space-x-3">
             <span className="font-semibold">{match.away_team}</span>
@@ -105,7 +97,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
                     <p className="text-sm">
                       {match.home_score === match.away_score 
                         ? 'Match Null' 
-                        : `${match.home_score! > match.away_score! ? match.home_team : match.away_team} victory`}
+                        : `Victoire de ${match.home_score! > match.away_score! ? match.home_team : match.away_team}`}
                     </p>
                   </div>
                 </div>

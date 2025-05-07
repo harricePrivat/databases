@@ -44,7 +44,7 @@ export default function Competitions() {
   return (
     <div className="block">
         <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
-        <FilterBar darkMode={darkMode}/>
+        <FilterBar darkMode={darkMode} placeholder='Recherche de quelques competitions'/>
         <div className="flex w-full h-screen justify-center items-center">
         <p className="text-3xl underline text-white">Liste des competitions</p>
         </div>

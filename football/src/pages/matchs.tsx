@@ -4,7 +4,7 @@ import FilterBar from '../components/FilterBar';
 // import UpcomingMatches from './UpcomingMatches';
 import MatchList from '../components/MatchList';
 // import { matches } from '../data/mockData';
-import { MatchProps } from '../types'; 
+import {  MatchProps } from '../types'; 
 
 
 function App() {
@@ -18,6 +18,8 @@ function App() {
 
   const [currentView, setCurrentView] = useState('Match');
   const [match, setMatch]= useState<MatchProps[]>([])
+  const [filteredMatch, setFilteredMatch]= useState<MatchProps[]>(match)
+
 
 async function fetchData(url: string){
   try{
@@ -33,8 +35,10 @@ async function fetchData(url: string){
   useEffect(()=>{
     const matchs = async ()=>{
       const response = await fetchData("http://localhost:3000/five-matchs")
-      if(response)
+      if(response){
         setMatch(response)
+        setFilteredMatch(response)
+      }
 
     }
 
@@ -57,11 +61,29 @@ async function fetchData(url: string){
     };
   }, [darkMode]);
 
+  const [filter,setFilter] =useState("")
+  
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };
 
+  useEffect(()=>{
+    // if (filter) {
+    //   console.log("Misy ooo")
+
+      const result = match.filter((m) =>
+        m.home_team.toLowerCase().includes(filter.toLowerCase()) ||
+        m.away_team.toLowerCase().includes(filter.toLowerCase())
+      );
+      setFilteredMatch(result);
+    // } else{
+    //   console.log("Tsisy ooo")
+    //   setFilteredMatch(match);
+  //}
+},[filter])
+    
   return (
+    
     <div className={`min-h-screen ${darkMode ? 'bg-slate-950 text-white' : 'bg-gray-100 text-slate-900'} transition-colors duration-300`}>
       <Navbar 
         darkMode={darkMode} 
@@ -71,13 +93,16 @@ async function fetchData(url: string){
       />
       
       <FilterBar 
+      placeholder='Recherche de matchs ...'
         darkMode={darkMode} 
+        filterOptions={filter}
+        setFilterOptions={setFilter}
       />
       
       <main className="container mx-auto pb-8">
       <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <MatchList 
-        matches={match} 
+        matches={filteredMatch} 
         darkMode={darkMode} 
         title="Les matchs" 
       />

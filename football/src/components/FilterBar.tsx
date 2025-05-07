@@ -4,12 +4,13 @@ import { Search } from 'lucide-react';
 
 interface FilterBarProps {
   darkMode: boolean;
-  // filterOptions: MatchFilterOptions;
-  // setFilterOptions: React.Dispatch<React.SetStateAction<MatchFilterOptions>>;
+  placeholder: string
+  filterOptions?: string;
+  setFilterOptions?: React.Dispatch<React.SetStateAction<string>>;
   // leagues: string[];
 }
 
-const FilterBar: React.FC<FilterBarProps> = ({ darkMode,  }) => {
+const FilterBar: React.FC<FilterBarProps> = ({ darkMode, placeholder,setFilterOptions,filterOptions }) => {
   return (
     <div className={`sticky top-16 z-30 py-3 px-4 mb-4 ${darkMode ? 'bg-slate-900' : 'bg-gray-50'} border-b ${darkMode ? 'border-slate-800' : 'border-gray-200'} transition-colors duration-300`}>
       <div className="flex flex-col md:flex-row justify-between gap-4">
@@ -19,9 +20,9 @@ const FilterBar: React.FC<FilterBarProps> = ({ darkMode,  }) => {
           </div>
           <input
             type="text"
-            placeholder="Search for teams..."
-            // value={filterOptions.searchQuery}
-            // onChange={(e) => setFilterOptions({ ...filterOptions, searchQuery: e.target.value })}
+            placeholder={placeholder}
+           value={filterOptions ?? ""}
+            onChange={(e) => setFilterOptions!(e.target.value)}
             className={`pl-10 pr-4 py-2 w-auto rounded-lg border ${
               darkMode 
                 ? 'bg-slate-800 border-slate-700 text-white placeholder-gray-400' 
