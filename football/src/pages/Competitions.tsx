@@ -5,7 +5,6 @@ import FilterBar from '../components/FilterBar';
 export default function Competitions() {
 
         const [darkMode, setDarkMode] = useState(() => {
-            // Check for saved preference or system preference
             const savedMode = localStorage.getItem('darkMode');
             return savedMode 
               ? savedMode === 'true' 
@@ -35,11 +34,7 @@ export default function Competitions() {
           const toggleDarkMode = () => {
             setDarkMode(prevMode => !prevMode);
           };
-        // const [filterOptions, setFilterOptions] = useState<MatchFilterOptions>({
-        //     status: '',
-        //     league: '',
-        //     searchQuery: '',
-        //   });
+
 
   return (
     <div className="block">

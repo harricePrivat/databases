@@ -1,10 +1,21 @@
 import {useEffect,useState } from 'react'
 import NavBar from "../components/Navbar"
-// import { MatchFilterOptions } from '../types';
+import { Team } from '../types';
 import FilterBar from '../components/FilterBar';
+import TeamCard from '../components/TeamCard';
 
 export default function Teams() {
+        const teams : Team ={
+          name: "",
+          logoUrl: "",
+          won : 4,
+          lost : 6,
+          points: 44,
+          played: 6,
+          id: "4",
+          drawn: 0
 
+        }
         const [darkMode, setDarkMode] = useState(() => {
             // Check for saved preference or system preference
             const savedMode = localStorage.getItem('darkMode');
@@ -19,8 +30,7 @@ export default function Teams() {
 //     league: '',
 //     searchQuery: '',
 //   });
-      useEffect(() => {
-           
+      useEffect(() => {   
             localStorage.setItem('darkMode', String(darkMode));
             
             // Apply dark mode to document body
@@ -52,11 +62,19 @@ export default function Teams() {
         // setFilterOptions={setFilterOptions}
         // leagues={leagues}
       />
-        <div className="flex w-full h-screen justify-center items-center">
-        <p className="text-3xl underline text-white">Liste d'equipes</p>
-        </div>
+       <div className='flex p-20' >
+       <TeamCard team={teams}/>
+            <TeamCard team={teams}/>
+
+            <TeamCard team={teams}/>
+            <TeamCard team={teams}/>
+            <TeamCard team={teams}/>
+       </div>
+
+
     
     </div>
    
   )
 }
+ 

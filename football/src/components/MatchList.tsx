@@ -9,7 +9,6 @@ interface MatchListProps {
 }
 
 const MatchList: React.FC<MatchListProps> = ({ matches, darkMode, title }) => {
-  // const [matchFilter, setMatchFilter] = useState<MatchProps[]>(matches);
 
 
   return (
