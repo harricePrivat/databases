@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import FilterBar from '../components/FilterBar';
-import UpcomingMatches from './UpcomingMatches';
-import MatchHistory from './MatchHistory';
-import { matches } from '../data/mockData';
-import { MatchFilterOptions } from '../types';
+// import UpcomingMatches from './UpcomingMatches';
+import MatchList from '../components/MatchList';
+// import { matches } from '../data/mockData';
+import { MatchProps } from '../types'; 
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -16,17 +17,30 @@ function App() {
   });
 
   const [currentView, setCurrentView] = useState('Match');
-  
-  const [filterOptions, setFilterOptions] = useState<MatchFilterOptions>({
-    status: '',
-    league: '',
-    searchQuery: '',
-  });
+  const [match, setMatch]= useState<MatchProps[]>([])
 
-  // Get unique leagues for the filter dropdown
-  const leagues = Array.from(new Set(matches.map(match => match.league)));
-
+async function fetchData(url: string){
+  try{
+      const response=await  fetch(url)
+      if(response.ok){
+        return response.json()
+      }
+  }catch(e){
+    console.log("Voicile resultat du donne",e)
+  }
+} 
   // Save dark mode preference
+  useEffect(()=>{
+    const matchs = async ()=>{
+      const response = await fetchData("http://localhost:3000/five-matchs")
+      if(response)
+        setMatch(response)
+
+    }
+
+    matchs()
+  },[])
+
   useEffect(() => {
     localStorage.setItem('darkMode', String(darkMode));
     
@@ -58,25 +72,16 @@ function App() {
       
       <FilterBar 
         darkMode={darkMode} 
-        filterOptions={filterOptions} 
-        setFilterOptions={setFilterOptions}
-        leagues={leagues}
       />
       
       <main className="container mx-auto pb-8">
-        {currentView === 'upcoming' ? (
-          <UpcomingMatches 
-            matches={matches} 
-            filterOptions={filterOptions} 
-            darkMode={darkMode} 
-          />
-        ) : (
-          <MatchHistory 
-            matches={matches} 
-            filterOptions={filterOptions} 
-            darkMode={darkMode} 
-          />
-        )}
+      <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <MatchList 
+        matches={match} 
+        darkMode={darkMode} 
+        title="Les matchs" 
+      />
+    </div>
       </main>
     </div>
   );

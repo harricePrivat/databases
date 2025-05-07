@@ -1,6 +1,7 @@
 import { useEffect,useState } from 'react';
 // import { tournaments } from '../data/mockData';
 import { Calendar,Trophy } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface UpcomingTournamentsProps{
   darkMode : boolean
@@ -16,7 +17,7 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
   // Filter for upcoming tournaments only
   // const upcomingTournaments = tournaments.filter(t => t.status === 'upcoming');
   const [tournois,setTournois]= useState<TournoisProps[] >([])
-
+    const navigation = useNavigate()
   
       async function fetchData(url:string){
       const response= await fetch(url)
@@ -32,13 +33,15 @@ const SomeTournaments: React.FC<UpcomingTournamentsProps> = (darkMode) => {
       getData()
     },[])
 
-  
+  const goTournaments= ()=>{
+    navigation("/competition")
+  }
 
   return (
     <div className={`${darkMode.darkMode? 'bg-gray-800':'bg-gray-100' } rounded-xl shadow-lg overflow-hidden h-full`}>
       <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
         <h3 className={`font-semibold ${darkMode.darkMode?'text-white': 'text-gray-900'} `}>Quelques compétitions</h3>
-        <button className={`${darkMode.darkMode ? 'text-white': 'text-black'} underline hover:text-blue-500`}>Regarder tout </button>
+        <button onClick={goTournaments} className={`${darkMode.darkMode ? 'text-white': 'text-black'} underline hover:text-blue-500`}>Regarder tout </button>
       </div>
       
       <div className="divide-y divide-gray-100 dark:divide-gray-700">

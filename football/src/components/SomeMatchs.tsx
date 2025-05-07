@@ -1,4 +1,5 @@
 import React, { useEffect , useState} from 'react';
+import {useNavigate} from 'react-router-dom'
 // import { matche } from '../data/mockData';
 // import { ChevronRight } from 'lucide-react';
 interface RecentMatchesProps{
@@ -22,7 +23,7 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
   // const recentMatches = [...matche]
   //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   //   .slice(0, 5);
-  
+  const navigation = useNavigate()
   
   const [someMatchs,setSomeMatchs]= useState<MatchsProps[]>([])
 
@@ -44,6 +45,7 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
   },[])
   
   const goMatchs = ()=>{
+    navigation("/match")
 
   }
 

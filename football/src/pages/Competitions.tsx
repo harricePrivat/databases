@@ -1,5 +1,7 @@
 import {useEffect,useState } from 'react'
 import NavBar from "../components/Navbar"
+import FilterBar from '../components/FilterBar';
+
 export default function Competitions() {
 
         const [darkMode, setDarkMode] = useState(() => {
@@ -33,12 +35,17 @@ export default function Competitions() {
           const toggleDarkMode = () => {
             setDarkMode(prevMode => !prevMode);
           };
-        
+        // const [filterOptions, setFilterOptions] = useState<MatchFilterOptions>({
+        //     status: '',
+        //     league: '',
+        //     searchQuery: '',
+        //   });
 
   return (
     <div className="block">
         <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
-        <div className="flex w-screen h-screen justify-center items-center">
+        <FilterBar darkMode={darkMode}/>
+        <div className="flex w-full h-screen justify-center items-center">
         <p className="text-3xl underline text-white">Liste des competitions</p>
         </div>
     </div>

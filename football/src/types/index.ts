@@ -70,3 +70,16 @@ export interface Team {
   lost: number;
   points: number;
 }
+
+
+
+
+//==========================//
+export type MatchProps= {
+    nomTournois : string,
+    home_score: number,
+    away_score: number,
+    home_team: string,
+    away_team: string,
+    date: string
+}

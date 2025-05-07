@@ -4,6 +4,7 @@ import StatisticCard from '../components/StatisticsCard';
 import { Trophy , Calendar} from 'lucide-react';
 import RecentMatches from '../components/SomeMatchs';
 import UpcomingTournaments from '../components/SomeTournaments';
+import { useNavigate } from 'react-router-dom'
 
 // import { MatchFilterOptions , } from '../types';
 // import { matches } from '../data/mockData';
@@ -20,6 +21,7 @@ export default function Dashboard() {
     const [nbTeams,setNbTeams]= useState(0)
     const [nbTournois,setNbTournois]=useState(0)
     const [someTeams,setSomeTeams]= useState<TeamsProps[]>([])
+    const navigation = useNavigate()
     async function fetchData (url: string){
         try{
             const response= await fetch(url)
@@ -69,7 +71,9 @@ export default function Dashboard() {
 
       //   }
       // },[])
- 
+     const goTeams = ()=>{
+        navigation("/team")
+     }
      
       useEffect(()=>{
         const getData= async ()=>{
@@ -145,8 +149,9 @@ export default function Dashboard() {
 
       <div className=" mt-6 grid grid-cols-1 gap-6">
         <div className={`${darkMode?'bg-gray-800':'bg-white' } rounded-xl shadow-lg overflow-hidden`}>
-          <div className="p-5 border-b border-gray-100 dark:border-gray-700">
+          <div className="p-5 border-b flex justify-between border-gray-100 dark:border-gray-700">
           <h3 className={`font-semibold ${darkMode?'text-gray-100': 'text-gray-900'} `}>Quelques Équipes</h3>
+          <button onClick={goTeams} className={`${darkMode ? "text-white": "text-black"} underline hover:text-blue-400`}>Regarder tout</button>
           </div>
           
           <div className="p-5">
