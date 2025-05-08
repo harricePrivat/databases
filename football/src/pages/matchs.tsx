@@ -5,9 +5,11 @@ import FilterBar from '../components/FilterBar';
 import MatchList from '../components/MatchList';
 // import { matches } from '../data/mockData';
 import {  MatchProps } from '../types'; 
+import Pagination from '../components/Pagination';
 
 
 function App() {
+  const [currentPage,setCurrentPage]=useState(1)
   const [darkMode, setDarkMode] = useState(() => {
     // Check for saved preference or system preference
     const savedMode = localStorage.getItem('darkMode');
@@ -97,12 +99,15 @@ async function fetchData(url: string){
         darkMode={darkMode} 
         filterOptions={filter}
         setFilterOptions={setFilter}
+        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(filteredMatch.length/4)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
+
       />
       
       <main className="container mx-auto pb-8">
       <div className="pt-24 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <MatchList 
         matches={filteredMatch} 
+        currentPage={currentPage}
         darkMode={darkMode} 
         title="Les matchs" 
       />

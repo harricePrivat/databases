@@ -53,7 +53,7 @@ export default function Dashboard() {
               name: dd.name,
               nbMatch: dd.nbMatch ,
               victoire: dd.victoire,
-              drapeau: dd.drapeau
+              drapeau: dd.logo
           }))
           if(teams) {
             setSomeTeams(

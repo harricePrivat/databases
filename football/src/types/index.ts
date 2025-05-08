@@ -83,3 +83,9 @@ export type MatchProps= {
     away_team: string,
     date: string
 }
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}

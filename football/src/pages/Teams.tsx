@@ -3,19 +3,109 @@ import NavBar from "../components/Navbar"
 import { Team } from '../types';
 import FilterBar from '../components/FilterBar';
 import TeamCard from '../components/TeamCard';
+import Pagination from '../components/Pagination';
 
 export default function Teams() {
-        const teams : Team ={
-          name: "",
-          logoUrl: "",
-          won : 4,
-          lost : 6,
-          points: 44,
-          played: 6,
-          id: "4",
-          drawn: 0
-
-        }
+        // var currentPage : number =1
+        const [currentPage,setCurrentPage]= useState(1)
+        const teams : Team[] =[
+          {
+            name: "Brice Privat",
+            logoUrl: "https://flagcdn.com/al.svg",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },{
+            name: "",
+            logoUrl: "https://flagcdn.com/w320/al.png",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },{
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },{
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },{
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },
+          {
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },
+          {
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },
+          {
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          },
+          {
+            name: "",
+            logoUrl: "",
+            won : 4,
+            lost : 6,
+            points: 44,
+            played: 6,
+            id: "4",
+            drawn: 0
+  
+          }
+        ]
+     
         const [darkMode, setDarkMode] = useState(() => {
             // Check for saved preference or system preference
             const savedMode = localStorage.getItem('darkMode');
@@ -53,26 +143,25 @@ export default function Teams() {
         
 
   return (
-    <div className="block">
+    <div className="block pl-30 pr-30">
         <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
         <FilterBar 
         placeholder='Recherche equipes ...'
         darkMode={darkMode} 
+        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(teams.length/6)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
         // filterOptions={filterOptions} 
         // setFilterOptions={setFilterOptions}
         // leagues={leagues}
       />
-       <div className='flex p-20' >
-       <TeamCard team={teams}/>
-            <TeamCard team={teams}/>
+       <div className='container mx-auto  grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 grid-cols-1' >
+          {
+            teams.slice((currentPage-1)*6,currentPage*6).map(team=><TeamCard team={team} darkMode={darkMode}/>)
+          }
+       </div>  
+       <div className='container mx-auto m-14'>
 
-            <TeamCard team={teams}/>
-            <TeamCard team={teams}/>
-            <TeamCard team={teams}/>
        </div>
-
-
-    
+  
     </div>
    
   )

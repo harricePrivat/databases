@@ -4,14 +4,13 @@ import { Trophy, Calendar, MapPin } from 'lucide-react';
 
 interface TeamCardProps {
   team: Team;
+  darkMode : boolean
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
-  const totalPoints = (team.won * 3) + team.drawn;
-  const totalGames = team.won + team.drawn + team.lost;
-  
+const TeamCard: React.FC<TeamCardProps> = ({ team ,darkMode}) => {
+
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+    <div className={`${darkMode?"bg-gray-700":"bg-white"} rounded-xl  mt-20 ml-10 mr-10 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300`}>
       <div className="relative h-48">
         <img 
           src={team.logoUrl} 
@@ -23,7 +22,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
           <h3 className="text-2xl font-bold">{team.name}</h3>
           <div className="flex items-center mt-1 space-x-2">
             <MapPin size={16} />
-            <span className="text-sm">{team.name}</span>
+            <span className="text-sm text-white-600">{team.name}</span>
           </div>
         </div>
       </div>
@@ -31,34 +30,34 @@ const TeamCard: React.FC<TeamCardProps> = ({ team }) => {
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <Calendar size={16} className="text-gray-500" />
-            <span className="text-sm text-gray-600">Founded {team.name}</span>
+            <Calendar size={16} className={` ${darkMode?"text-gray-200":"text-gray-600"}`}/>
+            <span className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`}>Dernier match:  {team.name}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Trophy size={16} className="text-gray-500" />
-            <span className="text-sm text-gray-600">{team.points}</span>
+            <Trophy size={16} className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`} />
+            <span className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`}>{team.points}</span>
           </div>
         </div>
 
         <div className="mb-4">
-          <h4 className="font-semibold mb-2">Season Stats</h4>
+          <h4 className={`${darkMode?"text-gray-200":"text-gray-600"} font-semibold mb-2`}>Ses statistiques</h4>
           <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="bg-green-50 p-2 rounded">
+            <div className={`${darkMode?"bg-gray-600" : "bg-green-50"} p-2 rounded`}>
               <div className="text-green-600 font-bold">{team.won}</div>
-              <div className="text-xs text-gray-600">Wins</div>
+              <div className={`text-xs ${darkMode?"text-gray-200":"text-gray-600"}`}>Gagnés</div>
             </div>
-            <div className="bg-gray-50 p-2 rounded">
-              <div className="text-gray-600 font-bold">{team.drawn}</div>
-              <div className="text-xs text-gray-600">Draws</div>
+            <div className={`${darkMode?"bg-gray-600" : "bg-white-50"} p-2 rounded`}>
+              <div className={`${darkMode?"text-gray-50" : "text-gray-600"}`}>{team.drawn}</div>
+              <div className={`text-xs ${darkMode?"text-gray-200":"text-gray-600"}`}>Null</div>
             </div>
-            <div className="bg-red-50 p-2 rounded">
+            <div className={`${darkMode?"bg-gray-600" : "bg-red-50"} p-2 rounded`}>
               <div className="text-red-600 font-bold">{team.lost}</div>
-              <div className="text-xs text-gray-600">Losses</div>
+              <div className={`text-xs ${darkMode?"text-gray-200":"text-gray-600"}`}>Perdus</div>
             </div>
           </div>
-          <div className="mt-2 text-sm text-center text-gray-600">
+          {/* <div className={`${darkMode?"text-gray-200":"text-gray-600"} mt-2 text-sm text-center `}>
             {totalPoints} points in {totalGames} games
-          </div>
+          </div> */}
         </div>
 
         {/* <div className="border-t pt-4">
