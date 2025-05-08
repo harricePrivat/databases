@@ -35,6 +35,14 @@ app.get("/nb-data",async (req,res)=>{
       }
 })
 
+app.get("/test",async (req,res)=>{
+  try{
+    const data= await sq.query("CALl NbVictoire()")
+    res.json(data)
+  }catch(e){
+    console.log(e)
+  }
+})
 app.get("/teams",async (req,res)=>{
     try{
       var datas= []
