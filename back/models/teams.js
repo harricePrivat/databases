@@ -10,7 +10,15 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: DataTypes.STRING(255),
       allowNull: false
-    }
+    },
+    flag_png:{
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    flag_svg:{
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'teams',

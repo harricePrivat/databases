@@ -2,7 +2,7 @@ const express= require('express')
 const {models, sq} = require('./database')
 const { matchs, tournaments,teams } = models
 const cors = require('cors')
-// const auto= require('./sequelizequto')
+//  const auto= require('./sequelizequto')
 const app = express()
 
 //Middleware
@@ -41,13 +41,13 @@ app.get("/teams",async (req,res)=>{
       const fiveTeams= await teams.findAll({
         limit: 3
       })
-      // console.log(fiveTeams[0].dataValues)
+       console.log(fiveTeams[1].dataValues)
       for(fiveteam of fiveTeams){
-        var flagUrl=""
-        const response =await fetchData(`https://restcountries.com/v3.1/name/${fiveteam.dataValues.name}`)
+        // var flagUrl=""
+        // const response =await fetchData(`https://restcountries.com/v3.1/name/${fiveteam.dataValues.name}`)
       //  if(response.status===201) 
-        console.log("Voici le status de la requete",response.status)
-         if(response.status===undefined) flagUrl=response[0].flags.svg
+        // console.log("Voici le status de la requete",response.status)
+        //  if(response.status===undefined) flagUrl=response[0].flags.svg
          await sq.query("SET @result=0")
          await sq.query(`CALL CountMatchs(:team,@result)`,{
           replacements: {team: fiveteam.dataValues.name} 
@@ -62,7 +62,8 @@ app.get("/teams",async (req,res)=>{
           name: fiveteam.dataValues.name,
           nbMatch: matchCount,
           victoire: victoire,
-          drapeau: flagUrl
+          logo: fiveteam.dataValues.flag_svg,
+          drapeau: fiveteam.dataValues.flag_png
          })
       }
       return res.status(200).json(datas)
@@ -81,7 +82,7 @@ app.get("/five-tournaments",async (req,res)=> {
     })
     await sq.query("SET @result=0")
     for(fiveTournament of fiveTournaments){
-      await sq.query("CALL GetNbMatch(:tournoi,@result)",{
+      await sq.query("CALL GetNbMatchs(:tournoi,@result)",{
         replacements: {
           tournoi: fiveTournament.dataValues.name 
         }

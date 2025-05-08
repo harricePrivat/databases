@@ -1,7 +1,7 @@
 const {Sequelize} = require('sequelize')
 const { initModels } = require('./models/init-models')
 
-const sq = new Sequelize('football','dev','dev',{
+const sq = new Sequelize('foot','dev','dev',{
     host: 'localhost',
     dialect: "mysql"
 }) 
