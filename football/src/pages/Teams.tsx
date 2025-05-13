@@ -158,9 +158,7 @@ export default function Teams() {
             teams.slice((currentPage-1)*6,currentPage*6).map(team=><TeamCard team={team} darkMode={darkMode}/>)
           }
        </div>  
-       <div className='container mx-auto m-14'>
 
-       </div>
   
     </div>
    
