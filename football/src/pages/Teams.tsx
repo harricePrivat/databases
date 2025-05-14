@@ -4,6 +4,7 @@ import { Team } from '../types';
 import FilterBar from '../components/FilterBar';
 import TeamCard from '../components/TeamCard';
 import Pagination from '../components/Pagination';
+import { Link } from 'react-router-dom';
 
 export default function Teams() {
         // var currentPage : number =1
@@ -155,7 +156,7 @@ export default function Teams() {
       />
        <div className='container mx-auto  grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 grid-cols-1' >
           {
-            teams.slice((currentPage-1)*6,currentPage*6).map(team=><TeamCard team={team} darkMode={darkMode}/>)
+            teams.slice((currentPage-1)*6,currentPage*6).map(team=><Link to={`/team/${team}`}><TeamCard team={team} darkMode={darkMode}/></Link>)
           }
        </div>  
 
