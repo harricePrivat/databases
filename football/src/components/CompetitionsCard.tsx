@@ -54,7 +54,7 @@ const CompetitionCard: React.FC<Competition> = ({  darkMode , logo,name,country,
         </div>
 
         <div className="border-t pt-4">
-          <p className="text-sm text-gray-600 mb-3">{description}</p>
+          <p className={`${darkMode?"text-gray-200 mb-3 ":"text-gray-600 mb-3 "}text-sm `}>{description}</p>
           <div className="flex justify-between items-center">
             <div className="text-sm">
               <span className={`${darkMode?"text-gray-200":"text -gray-600" } font-bold`}>Season: </span>

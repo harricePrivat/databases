@@ -24,7 +24,7 @@ export default function Competitions() {
               type: "string",
               teams: "string",
               prize: 0,
-              description: "string",
+              description: "string description",
               seasonStart: "string",
               seasonEnd: "string",
               currentChampion:"string",
