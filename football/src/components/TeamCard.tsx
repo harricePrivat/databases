@@ -5,12 +5,13 @@ import { Trophy, Calendar, MapPin } from 'lucide-react';
 interface TeamCardProps {
   team: Team;
   darkMode : boolean
+  onClick : ()=> void
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({ team ,darkMode}) => {
+const TeamCard: React.FC<TeamCardProps> = ({ team ,darkMode, onClick}) => {
 
   return (
-    <div className={`${darkMode?"bg-gray-700":"bg-white"} rounded-xl  mt-20 ml-10 mr-10 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300`}>
+    <div  onClick={onClick} className={`${darkMode?"bg-gray-700":"bg-white"} rounded-xl  mt-20 ml-10 mr-10 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300`}>
       <div className="relative h-48">
         <img 
           src={team.logoUrl} 
