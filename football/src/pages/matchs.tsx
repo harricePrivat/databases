@@ -21,7 +21,8 @@ function App() {
   const [currentView, setCurrentView] = useState('Match');
   const [match, setMatch]= useState<MatchProps[]>([])
   const [filteredMatch, setFilteredMatch]= useState<MatchProps[]>(match)
-
+  const [filter,setFilter] =useState("")
+  const [total,setTotal]=useState(0)
 
 async function fetchData(url: string){
   try{
@@ -33,19 +34,21 @@ async function fetchData(url: string){
     console.log("Voicile resultat du donne",e)
   }
 } 
-  // Save dark mode preference
+
+
   useEffect(()=>{
     const matchs = async ()=>{
-      const response = await fetchData("http://localhost:3000/five-matchs")
+      const response = await fetchData(`http://localhost:3000/match-paginate?page=${currentPage}&search=${filter}`)
       if(response){
-        setMatch(response)
-        setFilteredMatch(response)
+        setTotal(response.total)
+        setMatch(response.result)
+        setFilteredMatch(response.result)
       }
 
     }
 
     matchs()
-  },[])
+  },[currentPage,filter])
 
   useEffect(() => {
     localStorage.setItem('darkMode', String(darkMode));
@@ -63,26 +66,24 @@ async function fetchData(url: string){
     };
   }, [darkMode]);
 
-  const [filter,setFilter] =useState("")
   
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };
 
-  useEffect(()=>{
-    // if (filter) {
-    //   console.log("Misy ooo")
-
-      const result = match.filter((m) =>
-        m.home_team.toLowerCase().includes(filter.toLowerCase()) ||
-        m.away_team.toLowerCase().includes(filter.toLowerCase())
-      );
-      setFilteredMatch(result);
-    // } else{
-    //   console.log("Tsisy ooo")
-    //   setFilteredMatch(match);
-  //}
-},[filter])
+//   useEffect(()=>{
+//     if (filter) {
+//       console.log("Misy ooo")
+//       const result = match.filter((m) =>
+//         m.home_team.toLowerCase().includes(filter.toLowerCase()) ||
+//         m.away_team.toLowerCase().includes(filter.toLowerCase())
+//       );
+//       setFilteredMatch(result);
+//     } else{
+//       console.log("Tsisy ooo")
+//       setFilteredMatch(match);
+//   }
+// },[filter])
     
   return (
     
@@ -99,7 +100,7 @@ async function fetchData(url: string){
         darkMode={darkMode} 
         filterOptions={filter}
         setFilterOptions={setFilter}
-        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(filteredMatch.length/4)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
+        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(total/10)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
 
       />
       
@@ -114,7 +115,7 @@ async function fetchData(url: string){
     </div>
       </main>
     </div>
-  );
+  ); 
 }
 
 export default App;

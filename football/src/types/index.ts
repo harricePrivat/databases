@@ -6,6 +6,10 @@ export type MatchProps= {
     home_score: number,
     away_score: number,
     home_team: string,
+    home_flag_svg:string,
+    home_flag_png:string
+    away_flag_svg:string,
+    away_flag_png:string
     away_team: string,
     date: string
 }

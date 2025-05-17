@@ -58,7 +58,7 @@ const SomeMatchs: React.FC<RecentMatchesProps> = (
       
       <div className={`divide-y ${darkMode.darkMode?'divide-gray-100' :'divide-gray-700'}`}>
         { someMatchs && someMatchs.map(match => (
-          <div key={match.id} className="p-4  transition-colors duration-150">
+          <div key={match.away_team} className="p-4  transition-colors duration-150">
             <div className="flex items-center">
               <div className="mr-3 flex items-center justify-center">
               <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>

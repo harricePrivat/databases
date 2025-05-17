@@ -35,19 +35,12 @@ app.get("/nb-data",async (req,res)=>{
       }
 })
 
-app.get("/test",async (req,res)=>{
-  try{
-    const data= await sq.query("CALl NbVictoire()")
-    res.json(data)
-  }catch(e){
-    console.log(e)
-  }
-})
 app.get("/teams",async (req,res)=>{
     try{
+      // const datas = await sq.query("CALL NV(332)")
       var datas= []
       const fiveTeams= await teams.findAll({
-        limit: 3
+        limit: 2
       })
        console.log(fiveTeams[1].dataValues)
       for(fiveteam of fiveTeams){
@@ -132,6 +125,33 @@ app.get("/five-matchs",async (req,res)=>{
   }
 })
 
+app.get("/match-paginate",async (req,res)=>{
+  try{
+    const paginate= req.query.page || 0
+    const search = req.query.search || undefined
+    if(search===undefined){
+       const result= await sq.query(`CALL MatchPaginate(${paginate})`)
+       res.status(200).json({
+        total : 48207,
+        result: result
+      })
+    }else{
+      const result= await sq.query(`CALL SearchPaginate(${paginate},"${search}")`)
+      const [{ "count(*)": count }] = await sq.query(`CALL NombreSearch("${search}")`)
+      res.status(200).json({
+        total : count,
+        result: result
+      })
+    } 
+    
+  }catch(e){
+    console.log("Erreur lors de ",e)
+  }
+})
+
 app.listen(3000,()=>{
     console.log("Serveur node JS sur le port 3000")
 })
+
+
+// create procedure NombreSearch(in search varchar(100)) begin select  count(*) from matchs m join scores s on m.id_scores = s.id_score join teams th on m.id_home_team= th.id_team join teams ta on m.id_away_team=ta.id_team join tournaments t on m.id_tournois=t.id_tournois where th.name like concat("%",search,"%") or ta.name like concat("%",search,"%") ; end //         

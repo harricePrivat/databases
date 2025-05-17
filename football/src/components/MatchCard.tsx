@@ -48,7 +48,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
         
         <div className="flex justify-between items-center mt-4">
           <div className="flex items-center space-x-3">
-            {/* <img src={match.team1.logo} alt={`${match.team1.name} logo`} className="w-10 h-10 rounded-full object-cover" /> */}
+            <img src={match.home_flag_svg} alt={`${match.home_flag_svg} logo`} className="w-10 h-10 rounded-full object-cover" />
             <span className="font-semibold">{match.home_team}</span>
           </div>
           
@@ -58,7 +58,7 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
           
           <div className="flex items-center space-x-3">
             <span className="font-semibold">{match.away_team}</span>
-            {/* <img src={match.team2.logo} alt={`${match.team2.name} logo`} className="w-10 h-10 rounded-full object-cover" /> */}
+            <img src={match.away_flag_svg} alt={`${match.away_flag_svg} logo`} className="w-10 h-10 rounded-full object-cover" />
           </div>
         </div>
         
@@ -69,12 +69,12 @@ const MatchCard: React.FC<MatchCardProps> = ({ match, darkMode }) => {
           >
             {expanded ? (
               <>
-                <span className="mr-1">Less info</span>
+                <span className="mr-1">Cacher l' info</span>
                 <ChevronUp size={16} />
               </>
             ) : (
               <>
-                <span className="mr-1">More info</span>
+                <span className="mr-1">Plus d'info</span>
                 <ChevronDown size={16} />
               </>
             )}

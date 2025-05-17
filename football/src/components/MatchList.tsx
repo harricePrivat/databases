@@ -9,14 +9,13 @@ interface MatchListProps {
   title: string;
 }
 
-const MatchList: React.FC<MatchListProps> = ({ matches, darkMode, title,currentPage }) => {
-
+const MatchList: React.FC<MatchListProps> = ({ matches, darkMode, title }) => {
 
   return (
     <div className="mb-8">
       <h2 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-4`}>{title}</h2>
       <div className="space-y-4">
-        {matches.length!==0? matches.slice((currentPage-1)*4,currentPage*4).map((match, index) => (
+        {matches.length!==0? matches.map((match, index) => (
           <MatchCard key={`${match.home_team}-${match.away_team}-${index}`} match={match} darkMode={darkMode} />
         )): <div className={`p-8 text-center rounded-lg ${darkMode ? 'bg-slate-800' : 'bg-white'} shadow-md`}>
         <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Aucun match trouve.</p>
