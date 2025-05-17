@@ -22,17 +22,11 @@ export interface PaginationProps {
 
 
 export interface Competition {
-  logo:string,
-  name:string,
-  country: string,
-  founded: string,
-  type: string,
-  teams: string,
-  prize: number,
-  description: string,
-  seasonStart: string,
-  seasonEnd: string,
-  currentChampion:string
+  tournament_name:string,
+  first_match_date: string,
+  total_matches: string,
+  last_match_date: string,
+  total_teams: number,
   darkMode: boolean
 }
 
@@ -41,8 +35,22 @@ export interface Team {
   id: string;
   name: string;
   logoUrl: string;
-  played: number;
   won: number;
   drawn: number;
   lost: number;
+}
+export interface TeamStatsProps {
+  teamName: string;
+  darkMode: boolean;
+  won:number;
+  lost:number;
+  drawn: number;
+  yearlyStats: {
+    year: number;
+    wins: number;
+    losses: number;
+    draws: number;
+    goalsFor: number;
+    goalsAgainst: number;
+  }[];
 }

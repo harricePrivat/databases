@@ -112,7 +112,7 @@ export default function Dashboard() {
 
   return (
     <div className='block'>
-       <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
+       <NavBar darkMode={darkMode} isView={true} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
        <main className=" container mx-auto pb-8">
         <div className="grid mt-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatisticCard 

@@ -7,124 +7,39 @@ import CompetitionCard from '../components/CompetitionsCard';
 export default function Competitions() {
  
         const [currentPage,setCurrentPage]=useState(1)
+        const [total,setTotal]=useState(0)
+        const [competitions,setCompetitions]= useState<Competition[]>([])
+        const [filter,setFilter]= useState("")
         const [darkMode, setDarkMode] = useState(() => {
-            const savedMode = localStorage.getItem('darkMode');
+          const savedMode = localStorage.getItem('darkMode');
             return savedMode 
               ? savedMode === 'true' 
               : window.matchMedia('(prefers-color-scheme: dark)').matches;
           });
         
           const [currentView, setCurrentView] = useState("Compétitions");
-          const competitions : Competition[]=[
-            {
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string description",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",
-              darkMode: darkMode
-            }, {
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string"
-              ,              darkMode: darkMode
+          async function fetchData(url: string){
+            try{
+                const response=await  fetch(url)
+                if(response.ok){
+                  return response.json()
+                }
+            }catch(e){
+              console.log("Voicile resultat du donne",e)
+            }
+          } 
 
-            }, {
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",
-              darkMode: darkMode
+      useEffect(()=>{
+        const competitions = async ()=>{
+          const response= await fetchData(`http://localhost:3000/all-tournaments?page=${currentPage}&search=${filter}`)
+          if(response){
+            setTotal(response.total)
+            setCompetitions(response.result)
+          }
+        }
 
-            }, {
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",              darkMode: darkMode
-
-            }, {
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",              darkMode: darkMode
-
-            },{
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",              darkMode: darkMode
-
-            },{
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",              darkMode: darkMode
-
-            },{
-              logo:"string",
-              name:"string",
-              country: "string",
-              founded: "string",
-              type: "string",
-              teams: "string",
-              prize: 0,
-              description: "string",
-              seasonStart: "string",
-              seasonEnd: "string",
-              currentChampion:"string",              darkMode: darkMode
-
-            },
-          ]
-
+        competitions()
+      },[currentPage,filter])
       useEffect(() => {
            
             localStorage.setItem('darkMode', String(darkMode));
@@ -150,13 +65,15 @@ export default function Competitions() {
 
   return (
     <div className="block">
-        <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
-        <FilterBar darkMode={darkMode}         
-        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(competitions.length/6)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
+        <NavBar darkMode={darkMode} isView={true} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
+        <FilterBar darkMode={darkMode}  
+        filterOptions={filter}
+        setFilterOptions={setFilter}       
+        pagination={<Pagination currentPage={currentPage}  totalPages={Math.ceil(total/6)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
         placeholder='Recherche de quelques competitions'/>
           <div className='container mx-auto m-20 grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 gap-6 grid-cols-1' >
           {
-            competitions.slice((currentPage-1)*6,currentPage*6).map(c=><CompetitionCard darkMode={darkMode} logo={c.logo} country={c.country} name={c.name} type={c.type} founded={c.founded} description={c.description} teams={c.teams} prize={c.prize} seasonEnd={c.seasonStart} seasonStart={c.seasonStart} currentChampion={c.currentChampion}  />)
+            competitions.map(c=><CompetitionCard darkMode={darkMode} total_matches={c.total_matches} total_teams={c.total_teams} first_match_date={c.first_match_date} last_match_date={c.last_match_date} tournament_name={c.tournament_name} />)
           }
        </div>  
 

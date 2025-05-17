@@ -73,6 +73,7 @@ async function fetchData(url: string){
     
     <div className={`min-h-screen ${darkMode ? 'bg-slate-950 text-white' : 'bg-gray-100 text-slate-900'} transition-colors duration-300`}>
       <Navbar 
+      isView={true}
         darkMode={darkMode} 
         toggleDarkMode={toggleDarkMode} 
         currentView={currentView}

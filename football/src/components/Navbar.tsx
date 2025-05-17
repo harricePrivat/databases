@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface NavbarProps {
   darkMode: boolean;
+  isView : boolean;
   toggleDarkMode: () => void;
   currentView: string;
   setCurrentView: (view: string) => void;
@@ -13,6 +14,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ 
   darkMode, 
   toggleDarkMode, 
+  isView,
   currentView, 
   setCurrentView 
 }) => {
@@ -30,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0 flex items-center">
+            <div onClick={()=>{navigate("/")}} className="flex-shrink-0 flex items-center">
               <div className={`h-8 w-8 rounded-full ${darkMode ? 'bg-emerald-500' : 'bg-emerald-600'} mr-2`}></div>
               <span className="font-bold text-xl">Stats Foot </span>
             </div>
@@ -38,11 +40,15 @@ const Navbar: React.FC<NavbarProps> = ({
 
           {/* Desktop menu */}
           <div className="block md:flex items-center space-x-4">
-          <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> clickNavigate("/",'Mes données')}/>
+        {
+          isView ? <div>
+                <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> clickNavigate("/",'Mes données')}/>
             <MenuNav currentView={currentView} darkMode={darkMode} title='Match' handleNavClick={()=> clickNavigate("/match","Matchs")}/>
               <MenuNav currentView={currentView} darkMode={darkMode} title='Equipes' handleNavClick={()=>clickNavigate("/team","Equipes")}/>
               <MenuNav currentView={currentView} darkMode={darkMode} title='Compétitions' handleNavClick={()=>clickNavigate("/competition","Compétitions")}/>
 
+          </div>: <div></div>
+        }
             {/* <MenuNav currentView={currentView} darkMode={darkMode} title='Mes données' handleNavClick={()=> handleNavClick('Mes données')}/> */}
             <button 
               onClick={toggleDarkMode} 

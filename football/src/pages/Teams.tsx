@@ -28,7 +28,6 @@ export default function Teams() {
           const teams = async ()=>{
             const response= await fetchData(`http://localhost:3000/team?page=${currentPage}&search=${filter}`)
             if(response){
-              console.log("Voici le resultat",response)
               setTotal(response.total)
               const result : Team[] = response.result.map((dd: any)=>({
                 name: dd.team,
@@ -37,6 +36,9 @@ export default function Teams() {
                 drawn: dd.Nulle,
                 lost: dd.defaites
               }))
+              // if(result.length<12){
+              //   setCurrentPage(1)
+              // }
               setTeams(result)
             }
           }
@@ -78,7 +80,7 @@ export default function Teams() {
 
   return (
     <div className="block pl-30 pr-30">
-        <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
+        <NavBar darkMode={darkMode} currentView={currentView}  isView={true} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
         <FilterBar 
         placeholder='Recherche equipes ...'
         filterOptions={filter}
@@ -89,7 +91,13 @@ export default function Teams() {
       />
        <div className='container mx-auto  grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 grid-cols-1' >
           {
-            teams.map(team=><TeamCard onClick={()=>{navigation("",{state : team})}} team={team}  darkMode={darkMode}/>)
+          (teams && teams.length!==0) ? teams.map(team=><TeamCard key={team.name} onClick={()=>{navigation(`/team/${team.name}`,{state : {team }})}} team={team}  darkMode={darkMode}/>):
+          <div className='flex justify-center items-center mt-16 ml-80 w-full h-full'>
+         <div className={`p-8 text-center rounded-lg ${darkMode ? 'bg-slate-800' : 'bg-white'} shadow-md`}>
+          <p className={`text-lg ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>Aucun Equipe trouve (ou retrouvez la pagination (1) ) .</p>
+          <p className={`text-sm mt-2 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>Veuillez bien regarder le nom de l'equipe entrer.</p>
+          </div> 
+          </div>
           }
        </div>  
 
