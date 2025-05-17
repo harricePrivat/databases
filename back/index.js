@@ -112,6 +112,47 @@ app.get("/five-tournaments",async (req,res)=> {
   }
 })
 
+app.get("/statperyear",async (req,res)=>{
+  try{
+    const pays = req.query.pays
+    const result = await sq.query(`CALL StatPerYear("${pays}")`)
+    res.status(200).json(result)
+  }catch(e){
+    res.status(500).json({
+      "error": e.error,
+    })
+  }
+})
+
+app.get("/all-tournaments",async (req,res)=> {
+  try{
+    const paginate = req.query.page || 0
+   const search= req.query.search || undefined
+   if(search===undefined){
+    const result = await sq.query(`call CompetitionPagination(${paginate})`)
+    res.status(200).json({
+      "total": 182,
+      "result": result
+    })
+   }else{
+    const result = await sq.query(`call CompetitionSearch(${paginate},"${search}")`)
+    const [{"count(*)": count}] = await sq.query(`call nombreSearchCompetition("${search}")`)
+    res.status(200).json({
+      "total": count,
+      "result": result
+    })
+   }
+
+  }catch(error){
+    console.log("Voici l'erreur",error)
+    res.status(500).json({
+      error: error.message,
+      message:"Erreur de serveur 500"
+    })
+ 
+  }
+})
+
 app.get("/five-matchs",async (req,res)=>{
   try{
    const result= await sq.query("CALL GetFiveMatchs()")
@@ -181,3 +222,4 @@ app.listen(3000,()=>{
 
 
 // create procedure NombreSearch(in search varchar(100)) begin select  count(*) from matchs m join scores s on m.id_scores = s.id_score join teams th on m.id_home_team= th.id_team join teams ta on m.id_away_team=ta.id_team join tournaments t on m.id_tournois=t.id_tournois where th.name like concat("%",search,"%") or ta.name like concat("%",search,"%") ; end //         
+
