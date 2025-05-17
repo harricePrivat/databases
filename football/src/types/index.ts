@@ -45,5 +45,4 @@ export interface Team {
   won: number;
   drawn: number;
   lost: number;
-  points: number;
 }

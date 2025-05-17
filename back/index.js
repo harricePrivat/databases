@@ -70,6 +70,7 @@ app.get("/teams",async (req,res)=>{
 
 })
 
+
 app.get("/five-tournaments",async (req,res)=> {
   try{
     var datas= []
@@ -127,7 +128,7 @@ app.get("/five-matchs",async (req,res)=>{
 
 app.get("/match-paginate",async (req,res)=>{
   try{
-    const paginate= req.query.page || 0
+    const paginate= req.query.page || 1
     const search = req.query.search || undefined
     if(search===undefined){
        const result= await sq.query(`CALL MatchPaginate(${paginate})`)
@@ -148,6 +149,31 @@ app.get("/match-paginate",async (req,res)=>{
     console.log("Erreur lors de ",e)
   }
 })
+
+
+app.get("/team",async (req,res)=>{
+  try{
+    const paginate = req.query.page || 1 
+    const search = req.query.search || undefined
+    if(search===undefined){
+      const result = await sq.query(`CALL TeamPaginate(${paginate})`)
+    res.status(200).json({
+      "total": 332,
+      "result": result
+    })
+    }else{
+      const [{"count(*)": count }] = await sq.query(`call NombreSearchTeam("${search}")`)
+      const result = await sq.query(`CALL TeamSearch(${paginate},"${search}")`)
+    res.status(200).json({
+      "total": count,
+      "result": result
+    })
+    }
+  }catch(e){
+    res.status(500).json({"Erreur":"Erreur du serveur"})
+  }
+})
+
 
 app.listen(3000,()=>{
     console.log("Serveur node JS sur le port 3000")

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Team } from '../types';
-import { Trophy, Calendar, MapPin } from 'lucide-react';
+import { GoalIcon, Calendar, MapPin } from 'lucide-react';
 
 interface TeamCardProps {
   team: Team;
@@ -35,8 +35,8 @@ const TeamCard: React.FC<TeamCardProps> = ({ team ,darkMode, onClick}) => {
             <span className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`}>Dernier match:  {team.name}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Trophy size={16} className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`} />
-            <span className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`}>{team.points}</span>
+            <GoalIcon size={16} className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`} />
+            <span className={`text-sm ${darkMode?"text-gray-200":"text-gray-600"}`}>{team.drawn+team.lost+team.won}</span>
           </div>
         </div>
 

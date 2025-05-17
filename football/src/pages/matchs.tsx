@@ -19,8 +19,7 @@ function App() {
   });
 
   const [currentView, setCurrentView] = useState('Match');
-  const [match, setMatch]= useState<MatchProps[]>([])
-  const [filteredMatch, setFilteredMatch]= useState<MatchProps[]>(match)
+  const [filteredMatch, setFilteredMatch]= useState<MatchProps[]>([])
   const [filter,setFilter] =useState("")
   const [total,setTotal]=useState(0)
 
@@ -41,7 +40,6 @@ async function fetchData(url: string){
       const response = await fetchData(`http://localhost:3000/match-paginate?page=${currentPage}&search=${filter}`)
       if(response){
         setTotal(response.total)
-        setMatch(response.result)
         setFilteredMatch(response.result)
       }
 
@@ -70,20 +68,6 @@ async function fetchData(url: string){
   const toggleDarkMode = () => {
     setDarkMode(prevMode => !prevMode);
   };
-
-//   useEffect(()=>{
-//     if (filter) {
-//       console.log("Misy ooo")
-//       const result = match.filter((m) =>
-//         m.home_team.toLowerCase().includes(filter.toLowerCase()) ||
-//         m.away_team.toLowerCase().includes(filter.toLowerCase())
-//       );
-//       setFilteredMatch(result);
-//     } else{
-//       console.log("Tsisy ooo")
-//       setFilteredMatch(match);
-//   }
-// },[filter])
     
   return (
     

@@ -8,105 +8,41 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Teams() {
         // var currentPage : number =1
+        async function fetchData(url: string){
+          try{
+              const response=await  fetch(url)
+              if(response.ok){
+                return response.json()
+              }
+          }catch(e){
+            console.log("Voicile resultat du donne",e)
+          }
+        } 
+
         const navigation = useNavigate()
         const [currentPage,setCurrentPage]= useState(1)
-        const teams : Team[] =[
-          {
-            name: "Brice Privat",
-            logoUrl: "https://flagcdn.com/al.svg",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },{
-            name: "",
-            logoUrl: "https://flagcdn.com/w320/al.png",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },{
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },{
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },{
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },
-          {
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },
-          {
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },
-          {
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
-          },
-          {
-            name: "",
-            logoUrl: "",
-            won : 4,
-            lost : 6,
-            points: 44,
-            played: 6,
-            id: "4",
-            drawn: 0
-  
+        const [teams,setTeams]= useState<Team[]>([])
+        const [total,setTotal]=useState(0)
+        const [filter,setFilter]=useState("")
+        useEffect(  ()=>{
+          const teams = async ()=>{
+            const response= await fetchData(`http://localhost:3000/team?page=${currentPage}&search=${filter}`)
+            if(response){
+              console.log("Voici le resultat",response)
+              setTotal(response.total)
+              const result : Team[] = response.result.map((dd: any)=>({
+                name: dd.team,
+                logoUrl: dd.flag_svg,
+                won: dd.victoires,
+                drawn: dd.Nulle,
+                lost: dd.defaites
+              }))
+              setTeams(result)
+            }
           }
-        ]
+
+          teams()
+        },[currentPage,filter])
      
         const [darkMode, setDarkMode] = useState(() => {
             // Check for saved preference or system preference
@@ -115,14 +51,10 @@ export default function Teams() {
               ? savedMode === 'true' 
               : window.matchMedia('(prefers-color-scheme: dark)').matches;
           });
-        
+
           const [currentView, setCurrentView] = useState("Equipes");
-// const [filterOptions, setFilterOptions] = useState<MatchFilterOptions>({
-//     status: '',
-//     league: '',
-//     searchQuery: '',
-//   });
-      useEffect(() => {   
+      
+          useEffect(() => {   
             localStorage.setItem('darkMode', String(darkMode));
             
             // Apply dark mode to document body
@@ -149,15 +81,15 @@ export default function Teams() {
         <NavBar darkMode={darkMode} currentView={currentView} setCurrentView={setCurrentView} toggleDarkMode={toggleDarkMode}/> 
         <FilterBar 
         placeholder='Recherche equipes ...'
+        filterOptions={filter}
+        setFilterOptions={setFilter}
         darkMode={darkMode} 
-        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(teams.length/6)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
-        // filterOptions={filterOptions} 
-        // setFilterOptions={setFilterOptions}
-        // leagues={leagues}
+        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(total/5)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
+
       />
        <div className='container mx-auto  grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 grid-cols-1' >
           {
-            teams.slice((currentPage-1)*6,currentPage*6).map(team=><TeamCard onClick={()=>{navigation("",{state : team})}} team={team}  darkMode={darkMode}/>)
+            teams.map(team=><TeamCard onClick={()=>{navigation("",{state : team})}} team={team}  darkMode={darkMode}/>)
           }
        </div>  
 
