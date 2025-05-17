@@ -84,7 +84,7 @@ export default function Teams() {
         filterOptions={filter}
         setFilterOptions={setFilter}
         darkMode={darkMode} 
-        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(total/5)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
+        pagination={<Pagination currentPage={currentPage} totalPages={Math.ceil(total/6)} onPageChange={(current:number)=>{setCurrentPage(current)}}/>}
 
       />
        <div className='container mx-auto  grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 grid-cols-1' >
