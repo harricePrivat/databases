@@ -127,22 +127,17 @@ app.get("/statperyear",async (req,res)=>{
 app.get("/stat-tournois",async (req,res)=>{
   try{
     const nomTournois= req.query.nomTournois
-    const goal = await sq.query(`CALL ButeurParTournois("${nomTournois}",${5})`)
-    const match = await sq.query(`CALL MatchParTournoi("${nomTournois}",${5})`)
-    const win = await sq.query(`CALL WinParTournois("${nomTournois}",${5})`)
-
-    res.status(200).json([
+    const goal = await sq.query(`CALL ButeurParTournois("${nomTournois}",${50000})`)
+    const match = await sq.query(`CALL MatchParTournoi("${nomTournois}",${50000})`)
+    const win = await sq.query(`CALL WinParTournois("${nomTournois}",${50000})`)
+    console.log("Voici le resultat de la requete",goal.length,match.length,win.length)
+    res.status(200).json(
       {
         goal : goal,
+        match : match,
+        win: win
       }
-      ,{
-          match : match
-        },
-        {
-          win: win
-        }
-
-    ])
+    )
   }catch(error){
     console.log("Voici l'erreur",error)
     res.status(500).json({
