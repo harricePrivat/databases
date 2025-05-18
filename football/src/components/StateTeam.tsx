@@ -7,7 +7,7 @@ const StateTeam: React.FC<TeamStatsProps> = ({ teamName, yearlyStats ,darkMode,w
 
 
   const winPercentages = (yearlyStats || [])
-  .filter(stat => stat !== undefined && stat !== null)
+  .filter(stat => stat !== undefined && stat !== null).reverse()
   .map(stat => ({
     year: stat.year,
     winRate: ((stat.wins  * 10000 / (stat.wins + stat.losses + stat.draws))).toFixed(1),
