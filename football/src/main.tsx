@@ -9,6 +9,7 @@ import Teams from './pages/Teams.tsx'
 import Competitions from './pages/Competitions.tsx'
 import OneTeams from './pages/OneTeams.tsx'
 import OneCompetitions from './pages/OneCompetitions.tsx'
+import Predict from './pages/Predict.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/andrana" element={<OneTeams/>}/>
         <Route path='/competition/:nameCompetition' element={<OneCompetitions/>}/>
         <Route path="/competition" element={<Competitions/>}/>
+        <Route path='/predict' element={<Predict/>}/>
     </Routes>
     </BrowserRouter>
   </StrictMode>,

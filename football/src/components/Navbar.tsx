@@ -46,6 +46,8 @@ const Navbar: React.FC<NavbarProps> = ({
             <MenuNav currentView={currentView} darkMode={darkMode} title='Match' handleNavClick={()=> clickNavigate("/match","Matchs")}/>
               <MenuNav currentView={currentView} darkMode={darkMode} title='Equipes' handleNavClick={()=>clickNavigate("/team","Equipes")}/>
               <MenuNav currentView={currentView} darkMode={darkMode} title='Compétitions' handleNavClick={()=>clickNavigate("/competition","Compétitions")}/>
+              <MenuNav currentView={currentView} darkMode={darkMode} title='Prédictions' handleNavClick={()=>clickNavigate("/predict","Prédictions")}/>
+
 
           </div>: <div></div>
         }
