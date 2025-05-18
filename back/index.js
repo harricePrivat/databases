@@ -9,14 +9,14 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-async function fetchData(url){
-   try{
-    const response= await fetch(url)
-    return await response.json()    
-   }catch(error){
-    console.log("Voici l'erreur ",error)
-   }
-}
+// async function fetchData(url){
+//    try{
+//     const response= await fetch(url)
+//     return await response.json()    
+//    }catch(error){
+//     console.log("Voici l'erreur ",error)
+//    }
+// }
 
 app.get("/nb-data",async (req,res)=>{
     try {
@@ -148,6 +148,34 @@ app.get("/stat-tournois",async (req,res)=>{
   }
 })
 
+app.get("/search-team",async (req,res)=>{
+  try{
+    const team = req.query.team
+    const result = await sq.query(`select distinct name, flag_svg from teams where name like concat('%','${team}','%')`)
+    res.status(200).json(result)
+  }catch(error){
+    console.log("Voici l'erreur",error)
+    res.status(500).json({
+      error: error.message,
+      message:"Erreur de serveur 500"
+    })
+  }
+})
+
+app.get("/search-tournois",async (req,res)=>{
+  try{
+    const tournois = req.query.tournois
+    const result = await sq.query(`select * from tournaments where name like concat('%','${tournois}','%')`)
+    res.status(200).json(result)
+  }catch(error){
+    console.log("Voici l'erreur",error)
+    res.status(500).json({
+      error: error.message,
+      message:"Erreur de serveur 500"
+    })
+  }
+})
+
 app.get("/all-tournaments",async (req,res)=> {
   try{
     const paginate = req.query.page || 0
@@ -239,6 +267,22 @@ app.get("/team",async (req,res)=>{
   }
 })
 
+app.get("/predict",async(req,res)=>{
+try{
+  const team1= req.query.team1
+  const team2= req.query.team2
+  const tournois = req.query.tournois
+  const result = await sq.query(`CALL predict_match("${team1}","${team2}","${tournois}")`)
+
+  res.status(200).json(result[0])
+  
+}catch(e){
+  res.status(500).json({
+    error: e.error
+  })
+}
+  
+})
 
 app.listen(3000,()=>{
     console.log("Serveur node JS sur le port 3000")
