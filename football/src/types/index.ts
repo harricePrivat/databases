@@ -23,6 +23,7 @@ export interface PaginationProps {
 
 export interface Competition {
   tournament_name:string,
+  onClick: ()=> void,
   first_match_date: string,
   total_matches: string,
   last_match_date: string,
@@ -53,4 +54,21 @@ export interface TeamStatsProps {
     goalsFor: number;
     goalsAgainst: number;
   }[];
+}
+
+
+export interface C {
+  id: number;
+  name: string;
+  logo: string;
+  country: string;
+  type: 'League' | 'Cup' | 'International';
+  founded: number;
+  teams: number;
+  currentChampion: string;
+  seasonStart: string;
+  seasonEnd: string;
+  description: string;
+  prize: string;
+  tier: number;
 }

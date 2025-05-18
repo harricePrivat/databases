@@ -20,7 +20,6 @@ const StateTeam: React.FC<TeamStatsProps> = ({ teamName, yearlyStats ,darkMode,w
   }));
 
 
-  console.log("voici une remarque",yearlyStats)
 // Max goalsFor sur une seule année
 const maxGoalsFor = Math.max(...yearlyStats.map(stat => stat.goalsFor || 0));
 
@@ -28,11 +27,6 @@ const maxGoalsFor = Math.max(...yearlyStats.map(stat => stat.goalsFor || 0));
 const maxGoalDiff = Math.max(...yearlyStats.map(stat => (stat.goalsFor - stat.goalsAgainst) || 0));
 
 const maxGoal = Math.max(...yearlyStats.map(stat => Math.max(stat.goalsFor, stat.goalsAgainst)));
-
-  // console.log("voici une winPercentage",winPercentages)
-
-  // const currentYearStats = yearlyStats[yearlyStats.length - 1];
-  // const totalGames = currentYearStats.wins + currentYearStats.losses + currentYearStats.draws;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

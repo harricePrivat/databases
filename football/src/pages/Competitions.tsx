@@ -4,8 +4,10 @@ import FilterBar from '../components/FilterBar';
 import Pagination from '../components/Pagination';
 import { Competition } from '../types';
 import CompetitionCard from '../components/CompetitionsCard';
+import { useNavigate } from 'react-router-dom';
+
 export default function Competitions() {
- 
+        const navigate= useNavigate()
         const [currentPage,setCurrentPage]=useState(1)
         const [total,setTotal]=useState(0)
         const [competitions,setCompetitions]= useState<Competition[]>([])
@@ -73,7 +75,7 @@ export default function Competitions() {
         placeholder='Recherche de quelques competitions'/>
           <div className='container mx-auto m-20 grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 gap-6 grid-cols-1' >
           {
-            competitions.map(c=><CompetitionCard darkMode={darkMode} total_matches={c.total_matches} total_teams={c.total_teams} first_match_date={c.first_match_date} last_match_date={c.last_match_date} tournament_name={c.tournament_name} />)
+            competitions.map(c=><CompetitionCard onClick={()=>{navigate(`/competition/${c.tournament_name.trim()}`,{state: {c: c}})}} darkMode={darkMode} total_matches={c.total_matches} total_teams={c.total_teams} first_match_date={c.first_match_date} last_match_date={c.last_match_date} tournament_name={c.tournament_name} />)
           }
        </div>  
 

@@ -3,9 +3,9 @@ import { Competition } from '../types';
 import { Trophy, Users, Calendar, Globe, Award } from 'lucide-react';
 import image from '../assets/competitions.webp'
 
-const CompetitionCard: React.FC<Competition> = ({  darkMode ,tournament_name,total_matches,total_teams,first_match_date,last_match_date }) => {
+const CompetitionCard: React.FC<Competition> = ({ onClick, darkMode ,tournament_name,total_matches,total_teams,first_match_date,last_match_date }) => {
   return (
-    <div className={`${darkMode?"bg-gray-600":"bg-white" } "bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"`}>
+    <div onClick={onClick} className={`${darkMode?"bg-gray-600":"bg-white" } "bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"`}>
       <div className="relative h-48">
         <img 
           src={image} 

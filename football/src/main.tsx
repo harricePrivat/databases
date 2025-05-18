@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard.tsx'
 import Teams from './pages/Teams.tsx'
 import Competitions from './pages/Competitions.tsx'
 import OneTeams from './pages/OneTeams.tsx'
+import OneCompetitions from './pages/OneCompetitions.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/team" element={<Teams/>}/>
         <Route path="/team/:nameTeam" element={<OneTeams/>}/>
         <Route path="/andrana" element={<OneTeams/>}/>
+        <Route path='/competition/:nameCompetition' element={<OneCompetitions/>}/>
         <Route path="/competition" element={<Competitions/>}/>
     </Routes>
     </BrowserRouter>

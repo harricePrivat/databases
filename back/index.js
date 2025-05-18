@@ -124,6 +124,35 @@ app.get("/statperyear",async (req,res)=>{
   }
 })
 
+app.get("/stat-tournois",async (req,res)=>{
+  try{
+    const nomTournois= req.query.nomTournois
+    const goal = await sq.query(`CALL ButeurParTournois("${nomTournois}",${5})`)
+    const match = await sq.query(`CALL MatchParTournoi("${nomTournois}",${5})`)
+    const win = await sq.query(`CALL WinParTournois("${nomTournois}",${5})`)
+
+    res.status(200).json([
+      {
+        goal : goal,
+      }
+      ,{
+          match : match
+        },
+        {
+          win: win
+        }
+
+    ])
+  }catch(error){
+    console.log("Voici l'erreur",error)
+    res.status(500).json({
+      error: error.message,
+      message:"Erreur de serveur 500"
+    })
+ 
+  }
+})
+
 app.get("/all-tournaments",async (req,res)=> {
   try{
     const paginate = req.query.page || 0
@@ -221,5 +250,4 @@ app.listen(3000,()=>{
 })
 
 
-// create procedure NombreSearch(in search varchar(100)) begin select  count(*) from matchs m join scores s on m.id_scores = s.id_score join teams th on m.id_home_team= th.id_team join teams ta on m.id_away_team=ta.id_team join tournaments t on m.id_tournois=t.id_tournois where th.name like concat("%",search,"%") or ta.name like concat("%",search,"%") ; end //         
 
