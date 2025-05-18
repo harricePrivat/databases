@@ -75,7 +75,7 @@ export default function Competitions() {
         placeholder='Recherche de quelques competitions'/>
           <div className='container mx-auto m-20 grid lg:grid-cols-3 xl:grid-cols-3 mb-20 md:grid-cols-2 gap-6 grid-cols-1' >
           {
-            competitions.map(c=><CompetitionCard onClick={()=>{navigate(`/competition/${c.tournament_name.trim()}`,{state: {c: c}})}} darkMode={darkMode} total_matches={c.total_matches} total_teams={c.total_teams} first_match_date={c.first_match_date} last_match_date={c.last_match_date} tournament_name={c.tournament_name} />)
+            competitions.map(c=><CompetitionCard key={c.tournament_name} onClick={()=>{navigate(`/competition/${c.tournament_name.trim()}`,{state: {c: c}})}} darkMode={darkMode} total_matches={c.total_matches} total_teams={c.total_teams} first_match_date={c.first_match_date} last_match_date={c.last_match_date} tournament_name={c.tournament_name} />)
           }
        </div>  
 

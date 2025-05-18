@@ -57,18 +57,18 @@ export interface TeamStatsProps {
 }
 
 
-export interface C {
-  id: number;
-  name: string;
-  logo: string;
-  country: string;
-  type: 'League' | 'Cup' | 'International';
-  founded: number;
-  teams: number;
-  currentChampion: string;
-  seasonStart: string;
-  seasonEnd: string;
-  description: string;
-  prize: string;
-  tier: number;
-}
+// export interface C {
+//   id: number;
+//   name: string;
+//   logo: string;
+//   country: string;
+//   type: 'League' | 'Cup' | 'International';
+//   founded: number;
+//   teams: number;
+//   currentChampion: string;
+//   seasonStart: string;
+//   seasonEnd: string;
+//   description: string;
+//   prize: string;
+//   tier: number;
+// }

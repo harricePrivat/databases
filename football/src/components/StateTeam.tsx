@@ -1,12 +1,13 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { Trophy, Users, TrendingUp, Target } from 'lucide-react';
 import { TeamStatsProps } from '../types';
+import Pagination from './Pagination';
 
 const StateTeam: React.FC<TeamStatsProps> = ({ teamName, yearlyStats ,darkMode,won,drawn,lost}) => {
-
-
-  const winPercentages = (yearlyStats || [])
+  const [currentPage,setCurrentPage]=useState(1)
+  const datas=yearlyStats.slice((currentPage*10)-10,currentPage*10)
+  const winPercentages = (datas || [])
   .filter(stat => stat !== undefined && stat !== null).reverse()
   .map(stat => ({
     year: stat.year,
@@ -82,7 +83,9 @@ const maxGoal = Math.max(...yearlyStats.map(stat => Math.max(stat.goalsFor, stat
             </div>
           </div>
         </div>
-
+          <div className='w-full items-center justify-center'>
+            <Pagination  currentPage={currentPage} onPageChange={(current:number)=>{setCurrentPage(current)}} totalPages={Math.ceil(yearlyStats.length/10)}/>
+          </div>
         {/* Victory Graph */}
         <div className={`${darkMode?"bg-gray-600":"bg-white"}  rounded-lg p-6 mb-8`}>
           <h2 className={`${darkMode?"text-white": "text-gray-600"} text-xl font-semibold mb-4`}>Evolution du taux de victoires</h2>
@@ -123,7 +126,7 @@ const maxGoal = Math.max(...yearlyStats.map(stat => Math.max(stat.goalsFor, stat
           <h2  className={`${darkMode?"text-white": "text-gray-600"} text-xl font-semibold mb-4`}>Analyses des buts</h2>
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={yearlyStats}>
+              <BarChart data={winPercentages}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis 
               dataKey="year" 

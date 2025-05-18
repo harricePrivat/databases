@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Trophy, Goal, Award } from 'lucide-react';
-import { competitionStats } from '../data/competitionStats';
+import Pagination from './Pagination';
+// import { competitionStats } from '../data/competitionStats';
 
 const COLORS = ['#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#bfdbfe'];
 
 type CompetitionStatsProps={
     darkMode: boolean,
-    name:string
+    name:string,
+    goal : {
+      team_name: string,
+      total_goals: number,
+    }[],
+    match: {
+      team_name: string,
+      total_matches: number,
+    }[],
+    win: {
+        team_name:string,
+        wins: number
+    }[]
+
+
 }
 
-const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
-  const { competitionName, teamStats, historicalParticipation } = competitionStats;
+const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name,match,win,goal}) => {
+  // const { competitionName, teamStats, historicalParticipation } = competitionStats;
   // Sort teams by different metrics
+  const [currentPage,setCurrentPage]=useState(1)
  const darkModes = darkMode
-  const topScorers = [...teamStats].sort((a, b) => b.goalsScored - a.goalsScored);
-  const mostWins = [...teamStats].sort((a, b) => b.wins - a.wins);
-  const mostAppearances = historicalParticipation;
+  const topScorers = [...goal].slice((currentPage*5)-5,currentPage*5).sort((a, b) => b.total_goals - a.total_goals);
+  const mostWins = [...win].slice((currentPage*5)-5,currentPage*5).sort((a, b) => b.wins - a.wins);
+  const mostAppearances = match.slice((currentPage*5)-5,currentPage*5).map((c)=>({
+    team: c.team_name,
+    appearances: c.total_matches
+  }));
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -33,8 +52,8 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
               <h3 className="text-lg font-semibold text-blue-900">Meuilleur Buteur</h3>
               <Goal className="text-blue-600" size={24} />
             </div>
-            <div className="text-2xl font-bold text-blue-800">{topScorers[0].name}</div>
-            <div className="text-blue-600 mt-1">{topScorers[0].goalsScored} buts</div>
+            <div className="text-2xl font-bold text-blue-800">{goal[0].team_name}</div>
+            <div className="text-blue-600 mt-1">{goal[0].total_goals} buts</div>
           </div>
 
           <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
@@ -42,8 +61,8 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
               <h3 className="text-lg font-semibold text-green-900">Plus de vainqueurs</h3>
               <Trophy className="text-green-600" size={24} />
             </div>
-            <div className="text-2xl font-bold text-green-800">{mostWins[0].name}</div>
-            <div className="text-green-600 mt-1">{mostWins[0].wins} victoires</div>
+            <div className="text-2xl font-bold text-green-800">{win[0].team_name}</div>
+            <div className="text-green-600 mt-1">{win[0].wins} victoires</div>
           </div>
 
           <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
@@ -51,10 +70,15 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
               <h3 className="text-lg font-semibold text-purple-900">Plus d'apparition</h3>
               <Award className="text-purple-600" size={24} />
             </div>
-            <div className="text-2xl font-bold text-purple-800">{mostAppearances[0].team}</div>
-            <div className="text-purple-600 mt-1">{mostAppearances[0].appearances} apparition</div>
+            <div className="text-2xl font-bold text-purple-800">{match[0].team_name}</div>
+            <div className="text-purple-600 mt-1">{match[0].total_matches} apparition</div>
           </div>
         </div>
+        <div className='w-full items-center justify-center'>
+          <Pagination currentPage={currentPage} totalPages={Math.ceil(goal.length/5)} onPageChange={(current:number)=>{
+            setCurrentPage(current)
+          }}/>
+          </div>
 
         {/* Goals Scored Chart */}
         <div className="mb-12">
@@ -63,8 +87,8 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={topScorers}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis dataKey="team_name" />
+                <YAxis dataKey={"total_goals"}/>
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
@@ -72,14 +96,13 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
                         <div className={`${darkMode?"bg-gray-600":"bg-white"} p-3 shadow-lg rounded-lg border`}>
                           <p className={`${darkModes?"text-gray-300" : "text-gray-600"}"font-semibold"`}>{payload[0].payload.name}</p>
                           <p className="text-blue-400">Goals: {payload[0].value}</p>
-                          <p className="text-gray-400">Matches: {payload[0].payload.matchesPlayed}</p>
                         </div>
                       );
                     }
                     return null;
                   }}
                 />
-                <Bar dataKey="goalsScored" fill="#2563eb" />
+                <Bar dataKey="total_goals" fill="#2563eb" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -129,7 +152,7 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={mostWins}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="team_name" />
                 <YAxis />
                 <Tooltip
                   content={({ active, payload }) => {
@@ -138,8 +161,8 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name}) => {
                         <div className={`${darkMode?"bg-gray-600":"bg-white"} p-3 shadow-lg rounded-lg border`}>
                           <p className={`${darkModes?"text-gray-300" : "text-gray-600"}"font-semibold"`}>{payload[0].payload.name}</p>
                           <p className="text-green-400">Wins: {payload[0].payload.wins}</p>
-                          <p className="text-blue-400">Draws: {payload[0].payload.draws}</p>
-                          <p className="text-red-400">Losses: {payload[0].payload.losses}</p>
+                          {/* <p className="text-blue-400">Draws: {payload[0].payload.draws}</p>
+                          <p className="text-red-400">Losses: {payload[0].payload.losses}</p> */}
                         </div>
                       );
                     }

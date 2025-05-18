@@ -44,7 +44,7 @@ export default function OneTeams() {
                     goalsFor: data.goals_scored,
                     goalsAgainst: data.goals_conceded
                 }))
-                const result = data.reverse().slice(0,10)
+                const result = data.reverse()
 
                 setYearlyStats(result)
             }
