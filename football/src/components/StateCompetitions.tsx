@@ -123,8 +123,8 @@ const CompetitionStats: React.FC<CompetitionStatsProps>= ({darkMode,name,match,w
                   outerRadius={150}
                   label={({ name, value }) => `${name}: ${value}`}
                 >
-                  {mostAppearances.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  {mostAppearances.map((entry,index) => (
+                    <Cell key={`cell-${index}-${entry}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip
