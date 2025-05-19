@@ -273,12 +273,10 @@ try{
   const team2= req.query.team2
   const tournois = req.query.tournois
   const result = await sq.query(`CALL predict_match("${team1}","${team2}","${tournois}")`)
-
   res.status(200).json(result[0])
-  
 }catch(e){
   res.status(500).json({
-    error: e.error
+    "erreur": e.error
   })
 }
   
