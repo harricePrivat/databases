@@ -132,7 +132,7 @@ export default function Dashboard() {
         <StatisticCard 
                 dark={darkMode}
 
-          title="Total Matches" 
+          title="Total Matchs" 
           value={nbMatchs} 
           icon={<Calendar size={24} className="text-white" />}
           bgColor="bg-blue-600 dark:bg-blue-500"

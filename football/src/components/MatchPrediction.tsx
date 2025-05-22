@@ -262,11 +262,11 @@ const predict = async ()=>{
             </div>
             <div className="flex justify-between items-center">
               <div className="text-blue-800">
-                <div className="text-2xl font-bold">{prediction.goals_conceded_team1}%</div>
+                <div className="text-2xl font-bold">{prediction.goals_conceded_team1}</div>
                 <div className="text-sm">{team1.name}</div>
               </div>
               <div className="text-red-800 text-right">
-                <div className="text-2xl font-bold">{prediction.goals_conceded_team2}%</div>
+                <div className="text-2xl font-bold">{prediction.goals_conceded_team2}</div>
                 <div className="text-sm">{team2.name}</div>
               </div>
             </div>
@@ -299,7 +299,7 @@ const predict = async ()=>{
             <div className="flex justify-between items-center">
               <div className="text-purple-800">
                 <div className="text-2xl font-bold">
-                  {prediction.form_team2}
+                  {prediction.form_team1}
                 </div>
                 <div className="text-sm">{team1.name}</div>
               </div>
